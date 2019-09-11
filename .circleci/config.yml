@@ -1,0 +1,110 @@
+version: 2.1
+jobs:
+  install-dependencies:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: "Install Dependencies"
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  run-tests:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: "Run tests"
+          command: yarn test
+
+  lint:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: "Run ESLint"
+          command: yarn lint
+
+  publish-docker-image:
+    docker:
+      - image: docker:19.03.2
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.09.3
+          docker_layer_caching: true
+      - run:
+          name: "Docker Login"
+          command: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+      - run:
+          name: "Docker Build"
+          command: docker build -t $DOCKER_REPONAME .
+      - run:
+          name: "Tag Image"
+          command: docker tag $DOCKER_REPONAME $DOCKER_USERNAME/DOCKER_REPONAME
+      - run:
+          name: "Publish Image"
+          command: docker push $DOCKER_USERNAME/DOCKER_REPONAME
+
+workflows:
+  version: 2
+
+  development:
+    jobs:
+      - install-dependencies:
+          filters:
+            branches:
+              only: development
+      - run-tests:
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only: development
+      - lint:
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only: development
+
+  production:
+    jobs:
+      - install-dependencies:
+          filters:
+            branches:
+              only: master
+      - run-tests:
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only: master
+      - lint:
+          requires:
+            - install-dependencies
+          filters:
+            branches:
+              only: master
+      - publish-docker-image:
+          requires:
+            - run-tests
+            - lint
+          filters:
+            branches:
+              only: master
