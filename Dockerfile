@@ -6,7 +6,7 @@ COPY server.js ./
 COPY server ./
 COPY package.json ./
 
-RUN npm install
+RUN npm install --production
 
 EXPOSE 3000
 
