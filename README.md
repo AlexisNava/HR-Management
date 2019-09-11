@@ -1,6 +1,6 @@
 # HR Management App
 
-HR-Management-App is a SPA for the HT Management Project.
+HR-Management-App is a SPA for the HR Management Project.
 
 ## Requirements
 
