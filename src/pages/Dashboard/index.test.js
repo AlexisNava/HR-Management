@@ -7,5 +7,5 @@ import Dashboard from './index';
 it('should render the text `Dashboard`', () => {
   const { getByText } = render(<Dashboard />);
 
-  expect(getByText('Dashboard')).toBeInTheDOM();
+  expect(getByText('Dashboard')).toBeInTheDocument();
 });
