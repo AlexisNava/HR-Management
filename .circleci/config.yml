@@ -1,0 +1,91 @@
+version: 2.1
+jobs:
+  install_dependencies:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: "Install Dependencies"
+          command: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  run_tests:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: "Run tests"
+          command: yarn test
+
+  run_linter:
+    docker:
+      - image: circleci/node:10.16.3
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: "Run ESLint"
+          command: yarn lint
+
+  publish_docker_image:
+    docker:
+      - image: docker:19.03.2
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 18.09.3
+          docker_layer_caching: true
+      - run:
+          name: "Docker Login"
+          command: docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+      - run:
+          name: "Docker Build"
+          command: docker build -t $DOCKER_REPONAME .
+      - run:
+          name: "Tag Image"
+          command: docker tag $DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME
+      - run:
+          name: "Publish Image"
+          command: docker push $DOCKER_USERNAME/$DOCKER_REPONAME
+
+workflows:
+  version: 2
+
+  development:
+    jobs:
+      - install_dependencies:
+          filters:
+            branches:
+              ignore: master
+      - run_tests:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              ignore: master
+      - run_linter:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              ignore: master
+
+  production:
+    jobs:
+      - publish-docker-image:
+          filters:
+            branches:
+              only: master
