@@ -56,10 +56,10 @@ jobs:
           command: docker build -t $DOCKER_REPONAME .
       - run:
           name: "Tag Image"
-          command: docker tag $DOCKER_REPONAME $DOCKER_USERNAME/DOCKER_REPONAME
+          command: docker tag $DOCKER_REPONAME $DOCKER_USERNAME/$DOCKER_REPONAME
       - run:
           name: "Publish Image"
-          command: docker push $DOCKER_USERNAME/DOCKER_REPONAME
+          command: docker push $DOCKER_USERNAME/$DOCKER_REPONAME
 
 workflows:
   version: 2
