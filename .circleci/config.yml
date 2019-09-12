@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  install-dependencies:
+  install_dependencies:
     docker:
       - image: circleci/node:10.16.3
     steps:
@@ -16,7 +16,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-  run-tests:
+  run_tests:
     docker:
       - image: circleci/node:10.16.3
     steps:
@@ -28,7 +28,7 @@ jobs:
           name: "Run tests"
           command: yarn test
 
-  lint:
+  run_linter:
     docker:
       - image: circleci/node:10.16.3
     steps:
@@ -40,7 +40,7 @@ jobs:
           name: "Run ESLint"
           command: yarn lint
 
-  publish-docker-image:
+  publish_docker_image:
     docker:
       - image: docker:19.03.2
     steps:
@@ -66,45 +66,45 @@ workflows:
 
   development:
     jobs:
-      - install-dependencies:
+      - install_dependencies:
           filters:
             branches:
               only: development
-      - run-tests:
+      - run_tests:
           requires:
-            - install-dependencies
+            - install_dependencies
           filters:
             branches:
               only: development
-      - lint:
+      - run_linter:
           requires:
-            - install-dependencies
+            - install_dependencies
           filters:
             branches:
               only: development
 
   production:
     jobs:
-      - install-dependencies:
+      - install_dependencies:
           filters:
             branches:
               only: master
-      - run-tests:
+      - run_tests:
           requires:
-            - install-dependencies
+            - install_dependencies
           filters:
             branches:
               only: master
-      - lint:
+      - run_linter:
           requires:
-            - install-dependencies
+            - install_dependencies
           filters:
             branches:
               only: master
       - publish-docker-image:
           requires:
-            - run-tests
-            - lint
+            - run_tests
+            - run_linter
           filters:
             branches:
               only: master
