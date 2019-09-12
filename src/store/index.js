@@ -1,12 +1,20 @@
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Map } from 'immutable';
+import CreateSagaMiddleware from 'redux-saga';
 
-// Utils
 import RootReducer from './reducers';
+import RootSaga from './sagas';
 
 function ConfigureStore() {
   const initialState = Map();
-  const store = createStore(RootReducer, initialState);
+  const sagaMiddleware = CreateSagaMiddleware();
+  const store = createStore(
+    RootReducer,
+    initialState,
+    applyMiddleware(sagaMiddleware),
+  );
+
+  sagaMiddleware.run(RootSaga);
 
   return store;
 }
