@@ -2,6 +2,8 @@
 
 HR-Management-App is a SPA for the HR Management Project.
 
+[![CircleCI](https://circleci.com/gh/AlexisNava/HR-Management-App/tree/master.svg?style=svg)](https://circleci.com/gh/AlexisNava/HR-Management-App/tree/master)
+
 ## Requirements
 
 - [Node LTS](https://nodejs.org/en/download/) >= *v*10.16.3
