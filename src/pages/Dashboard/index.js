@@ -1,5 +1,7 @@
 import React from 'react';
 
-const Dashboard = () => <h1>Hello World</h1>;
+function Dashboard() {
+  return <h1>Dashboard</h1>;
+}
 
 export default Dashboard;
