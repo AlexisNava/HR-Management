@@ -85,7 +85,26 @@ workflows:
 
   production:
     jobs:
+      - install_dependencies:
+          filters:
+            branches:
+              only: master
+      - run_tests:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              only: master
+      - run_linter:
+          requires:
+            - install_dependencies
+          filters:
+            branches:
+              only: master
       - publish_docker_image:
+          requires:
+            - run_tests
+            - run_linter
           filters:
             branches:
               only: master
