@@ -2,7 +2,7 @@ import { createStore } from 'redux';
 import { Map } from 'immutable';
 
 // Utils
-import RootReducer from '../reducers';
+import RootReducer from './reducers';
 
 function ConfigureStore() {
   const initialState = Map();
