@@ -5,8 +5,6 @@ import { Provider } from 'react-redux';
 import Router from './router';
 import ConfigureStore from './store';
 
-import './normalize.css';
-
 const store = ConfigureStore();
 
 ReactDOM.render(
