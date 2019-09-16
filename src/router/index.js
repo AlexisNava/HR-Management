@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 
 // Styles
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
@@ -17,7 +17,11 @@ const Router = () => (
   <BrowserRouter>
     <MuiThemeProvider theme={theme}>
       <Switch>
-        <Route exact path="/" component={Dashboard} />
+        <Route
+          exact
+          path="/"
+          render={() => (false ? <Dashboard /> : <Redirect to="login" />)}
+        />
         <Route path="/login" component={LogIn} />
         <Route component={NotFound} />
       </Switch>

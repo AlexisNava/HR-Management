@@ -1,0 +1,49 @@
+.flex-container {
+  display: flex;
+}
+
+.flex-container--center-content {
+  margin-top: 10%;
+  justify-content: center;
+}
+
+.flex-container--vertical-alignment {
+  flex-flow: column;
+}
+
+.form {
+  padding: 5%;
+  min-width: 300px;
+}
+
+.form__element {
+  width: 100%;
+  margin-bottom: 2.5%;
+}
+
+.form__element--text {
+  text-align: center;
+}
+
+@media only screen and (max-width: 425px) {
+  .form {
+    width: 425px;
+  }
+
+  .flex-container--center-content {
+    margin-top: 0px;
+    justify-content: normal;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+  .form {
+    width: 375px;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .form {
+    width: 320px;
+  }
+}
