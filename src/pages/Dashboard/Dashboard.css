@@ -10,16 +10,24 @@
   width: 50%;
 }
 
-.navbar__group--actions {
-  display: flex;
-}
-
 .navbar__item {
   margin: 1.5%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .navbar__item--icon {
   font-size: 2.4em !important;
+}
+
+.navbar__item--icon-mobile {
+  font-size: 1.2em !important;
+}
+
+.navbar__item--mobile {
+  display: none;
 }
 
 @media only screen and (max-width: 425px) {
@@ -29,5 +37,13 @@
 
   .navbar__group--actions {
     display: none !important;
+  }
+
+  .navbar__item--desktop {
+    display: none;
+  }
+
+  .navbar__item--mobile {
+    display: flex;
   }
 }
