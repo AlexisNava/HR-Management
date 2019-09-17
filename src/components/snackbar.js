@@ -25,7 +25,7 @@ const snackbar = memo(({ isOpen, message }) => {
         <Button
           color="secondary"
           size="small"
-          onClose={() => dispatch(hideNotification())}
+          onClick={() => dispatch(hideNotification())}
         >
           OK
         </Button>,
