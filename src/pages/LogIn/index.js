@@ -6,13 +6,13 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 // Hooks
-import { textField } from '../../hooks';
+import { useTextFields } from '../../hooks';
 
 // Styles
 import './LogIn.css';
 
 const LogIn = memo(() => {
-  const [values, handleChange] = textField({
+  const [values, handleChange] = useTextFields({
     email: '',
     password: '',
   });

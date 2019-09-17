@@ -1,8 +1,6 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-
 import { useState } from 'react';
 
-export function textField(initialValues) {
+export function useTextFields(initialValues) {
   const [values, setValues] = useState(initialValues);
 
   function updateValues(event) {
