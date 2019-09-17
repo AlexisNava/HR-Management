@@ -1,37 +1,26 @@
-import React, { memo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
-import Button from '@material-ui/core/Button';
+import React, { memo, Fragment } from 'react';
+import { useSelector } from 'react-redux';
 
 // Components
 import NavBar from '../../components/NavBar';
-
-// Action Creators
-import { logOut } from '../../store/modules/user/actionCreators';
+import DrawerActions from '../../components/DrawerActions';
 
 // Styles
 import './Dashboard.css';
 
 const Dashboard = memo(() => {
-  const dispatch = useDispatch();
   const isAdMin = useSelector(state => state.user.get('isAdmin'));
 
   console.log('isAdMin', isAdMin);
 
   return (
-    <div>
+    <Fragment>
+      <DrawerActions />
+
       <NavBar />
 
       <h1>{isAdMin ? 'Admin' : 'Employee'} Dashboard</h1>
-
-      <Button
-        onClick={() => {
-          dispatch(logOut());
-        }}
-      >
-        Log Out
-      </Button>
-    </div>
+    </Fragment>
   );
 });
 

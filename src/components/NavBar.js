@@ -1,5 +1,7 @@
 import React, { memo } from 'react';
+import { useDispatch } from 'react-redux';
 
+// MUI Components
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
@@ -9,7 +11,12 @@ import IconButton from '@material-ui/core/IconButton';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import MenuIcon from '@material-ui/icons/Menu';
 
+// Action Creators
+import { logOut } from '../store/modules/user/actionCreators';
+
 const NavBar = memo(() => {
+  const dispatch = useDispatch();
+
   return (
     <AppBar position="static" className="navbar">
       <div className="navbar__container flex-container">
@@ -31,7 +38,9 @@ const NavBar = memo(() => {
 
         <div className="navbar__group--half navbar__group--actions flex-container flex-container--row-reverse">
           <div className="navbar__item">
-            <Button color="inherit">Log Out</Button>
+            <Button color="inherit" onClick={() => dispatch(logOut())}>
+              Log Out
+            </Button>
           </div>
 
           <div className="navbar__item">
