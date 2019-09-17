@@ -1,0 +1,33 @@
+.navbar {
+  margin-bottom: 1%;
+}
+
+.navbar__container {
+  width: 100%;
+}
+
+.navbar__group--half {
+  width: 50%;
+}
+
+.navbar__group--actions {
+  display: flex;
+}
+
+.navbar__item {
+  margin: 1.5%;
+}
+
+.navbar__item--icon {
+  font-size: 2.4em !important;
+}
+
+@media only screen and (max-width: 425px) {
+  .navbar__group--header {
+    width: 100%;
+  }
+
+  .navbar__group--actions {
+    display: none !important;
+  }
+}

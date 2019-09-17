@@ -1,16 +1,3 @@
-.flex-container {
-  display: flex;
-}
-
-.flex-container--center-content {
-  margin-top: 10%;
-  justify-content: center;
-}
-
-.flex-container--vertical-alignment {
-  flex-flow: column;
-}
-
 .form {
   padding: 5%;
   min-width: 300px;

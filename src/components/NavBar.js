@@ -9,33 +9,33 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 const NavBar = memo(() => {
   return (
-    <AppBar position="fixed">
-      <div>
-        <div>
-          <div>
-            <SupervisorAccountIcon />
+    <AppBar position="static" className="navbar">
+      <div className="navbar__container flex-container">
+        <div className="navbar__group--half navbar__group--header flex-container">
+          <div className="navbar__item">
+            <SupervisorAccountIcon className="navbar__item--icon" />
           </div>
 
-          <div>
+          <div className="navbar__item">
             <Typography variant="h6">HR Management</Typography>
           </div>
         </div>
 
-        <div>
-          <div>
-            <Button color="inherit">Position</Button>
+        <div className="navbar__group--half navbar__group--actions flex-container flex-container--row-reverse">
+          <div className="navbar__item">
+            <Button color="inherit">Log Out</Button>
           </div>
 
-          <div>
-            <Button color="inherit">Team</Button>
-          </div>
-
-          <div>
+          <div className="navbar__item">
             <Button color="inherit">Employee</Button>
           </div>
 
-          <div>
-            <Button color="inherit">Log Out</Button>
+          <div className="navbar__item">
+            <Button color="inherit">Team</Button>
+          </div>
+
+          <div className="navbar__item">
+            <Button color="inherit">Position</Button>
           </div>
         </div>
       </div>

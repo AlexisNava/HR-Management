@@ -9,6 +9,9 @@ import NavBar from '../../components/NavBar';
 // Action Creators
 import { logOut } from '../../store/modules/user/actionCreators';
 
+// Styles
+import './Dashboard.css';
+
 const Dashboard = memo(() => {
   const dispatch = useDispatch();
   const isAdMin = useSelector(state => state.user.get('isAdmin'));

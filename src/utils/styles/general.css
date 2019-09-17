@@ -1,0 +1,16 @@
+.flex-container {
+  display: flex;
+}
+
+.flex-container--center-content {
+  margin-top: 10%;
+  justify-content: center;
+}
+
+.flex-container--vertical-alignment {
+  flex-flow: column;
+}
+
+.flex-container--row-reverse {
+  flex-direction: row-reverse;
+}
