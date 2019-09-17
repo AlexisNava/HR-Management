@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -12,14 +12,12 @@ import { logIn } from '../../store/modules/user/actionCreators';
 // Styles
 import './LogIn.css';
 
-const LogIn = memo(() => {
+const LogIn = memo(({ history }) => {
   const dispatch = useDispatch();
-  const user = useSelector(state => state.get('user'));
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  console.log('user', user);
+  console.log('history', history);
 
   return (
     <div className="flex-container flex-container--center-content">
@@ -64,7 +62,8 @@ const LogIn = memo(() => {
               color="primary"
               onClick={() => {
                 if (email && password) {
-                  return dispatch(logIn(email, password));
+                  dispatch(logIn(email, password));
+                  history.push('/');
                 }
               }}
             >
