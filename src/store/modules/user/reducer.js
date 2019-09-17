@@ -16,10 +16,10 @@ const user = (state = initialState, action) => {
     case LOG_IN_SUCCESS:
       return state
         .set('token', action.payload.token)
-        .set('id', action.payload.personalInformation.id)
-        .set('isAdmin', action.payload.personalInformation.isAdmin)
-        .set('name', action.payload.personalInformation.name)
-        .set('lastName', action.payload.personalInformation.lastName);
+        .set('id', action.payload.userInformation.id)
+        .set('isAdmin', action.payload.userInformation.isAdmin)
+        .set('name', action.payload.userInformation.name)
+        .set('lastName', action.payload.userInformation.lastName);
     case LOG_OUT:
       return initialState;
     default:

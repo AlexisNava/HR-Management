@@ -1,13 +1,18 @@
 import axios from 'axios';
 
-// Utils
-import { authService } from '../utils/URLServices';
-
 export const logIn = async (email, password) => {
-  const response = await axios.post(`${authService}/login`, {
-    email,
-    password,
-  });
+  try {
+    const response = await axios.post('http://localhost:4000/api/auth/login', {
+      email,
+      password,
+    });
 
-  return response;
+    if (response && response.data && response.data.data) {
+      return response.data.data;
+    }
+
+    return null;
+  } catch (error) {
+    throw error;
+  }
 };

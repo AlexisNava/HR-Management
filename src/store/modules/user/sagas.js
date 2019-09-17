@@ -9,7 +9,12 @@ import { logIn } from '../../../services';
 function* logInRequest({ email, password }) {
   try {
     const response = yield call(logIn, email, password);
-    yield put({ type: LOG_IN_SUCCESS, payload: response });
+
+    if (response) {
+      yield put({ type: LOG_IN_SUCCESS, payload: response });
+    } else {
+      yield put({ type: LOG_IN_FAILURE });
+    }
   } catch (error) {
     yield put({ type: LOG_IN_FAILURE });
   }

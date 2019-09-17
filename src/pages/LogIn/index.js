@@ -1,5 +1,5 @@
 import React, { memo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -14,8 +14,12 @@ import './LogIn.css';
 
 const LogIn = memo(() => {
   const dispatch = useDispatch();
+  const user = useSelector(state => state.get('user'));
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  console.log('user', user);
 
   return (
     <div className="flex-container flex-container--center-content">
