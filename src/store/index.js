@@ -12,6 +12,7 @@ function ConfigureStore() {
     transforms: [immutableTransform()],
     key: 'root',
     storage,
+    whitelist: ['user'],
   };
   const persistedReducers = persistReducer(persistConfig, RootReducer);
   const sagaMiddleware = CreateSagaMiddleware();
