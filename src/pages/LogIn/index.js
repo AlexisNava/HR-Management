@@ -1,5 +1,6 @@
-import React, { memo, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { memo, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -14,6 +15,16 @@ import './LogIn.css';
 
 const LogIn = memo(({ history }) => {
   const dispatch = useDispatch();
+  const isLogged = useSelector(state => state.user.get('isLogged'));
+
+  useEffect(() => {
+    if (isLogged === true) {
+      history.push('/');
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLogged]);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -61,7 +72,6 @@ const LogIn = memo(({ history }) => {
               onClick={() => {
                 if (email && password) {
                   dispatch(logIn(email, password));
-                  history.push('/');
                 }
               }}
             >
@@ -73,5 +83,9 @@ const LogIn = memo(({ history }) => {
     </div>
   );
 });
+
+LogIn.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default LogIn;
