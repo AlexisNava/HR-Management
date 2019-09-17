@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 
-import { useSate } from 'react';
+import { useState } from 'react';
 
-const textField = initialValues => {
-  const [values, setValues] = useSate(initialValues);
+export function textField(initialValues) {
+  const [values, setValues] = useState(initialValues);
 
   function updateValues(event) {
     setValues({
@@ -13,6 +13,4 @@ const textField = initialValues => {
   }
 
   return [values, updateValues];
-};
-
-module.exports = textField;
+}

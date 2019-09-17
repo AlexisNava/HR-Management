@@ -5,51 +5,63 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
+// Hooks
+import { textField } from '../../hooks';
+
 // Styles
 import './LogIn.css';
 
-const LogIn = memo(() => (
-  <div className="flex-container flex-container--center-content">
-    <Paper>
-      <div className="form flex-container flex-container--vertical-alignment">
-        <div className="form__element form__element--text">
-          <Typography variant="h5">HR Management</Typography>
-        </div>
+const LogIn = memo(() => {
+  const [values, handleChange] = textField({
+    email: '',
+    password: '',
+  });
 
-        <div className="form__element form__element--text">
-          <Typography variant="h6">Log In</Typography>
-        </div>
+  return (
+    <div className="flex-container flex-container--center-content">
+      <Paper>
+        <div className="form flex-container flex-container--vertical-alignment">
+          <div className="form__element form__element--text">
+            <Typography variant="h5">HR Management</Typography>
+          </div>
 
-        <div className="form__element">
-          <TextField
-            fullWidth
-            id="outlined-name"
-            label="Name"
-            value=""
-            margin="normal"
-            variant="outlined"
-          />
-        </div>
+          <div className="form__element form__element--text">
+            <Typography variant="h6">Log In</Typography>
+          </div>
 
-        <div className="form__element">
-          <TextField
-            fullWidth
-            id="outlined-name"
-            label="Password"
-            value=""
-            margin="normal"
-            variant="outlined"
-          />
-        </div>
+          <div className="form__element">
+            <TextField
+              fullWidth
+              label="Email"
+              type="text"
+              margin="normal"
+              variant="outlined"
+              value={values.name}
+              onChange={handleChange}
+            />
+          </div>
 
-        <div className="form__element">
-          <Button fullWidth variant="contained" color="primary">
-            Log In
-          </Button>
+          <div className="form__element">
+            <TextField
+              fullWidth
+              label="Password"
+              type="password"
+              margin="normal"
+              variant="outlined"
+              value={values.name}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form__element">
+            <Button fullWidth variant="contained" color="primary">
+              Log In
+            </Button>
+          </div>
         </div>
-      </div>
-    </Paper>
-  </div>
-));
+      </Paper>
+    </div>
+  );
+});
 
 export default LogIn;
