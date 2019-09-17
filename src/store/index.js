@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware } from 'redux';
-import { Map } from 'immutable';
 import CreateSagaMiddleware from 'redux-saga';
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
