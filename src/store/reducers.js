@@ -1,8 +1,10 @@
-import { combineReducers } from 'redux-immutable';
+import { combineReducers } from 'redux';
 
 // Reducers
 import user from './modules/user/reducer';
 
-const rootReducer = combineReducers({ user });
+const rootReducer = combineReducers({
+  user,
+});
 
 export default rootReducer;

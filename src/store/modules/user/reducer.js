@@ -1,7 +1,7 @@
+import { fromJS } from 'immutable';
+
 // Actions
 import { LOG_IN_SUCCESS, LOG_OUT } from './actions';
-
-import { fromJS } from 'immutable';
 
 const initialState = fromJS({
   token: null,

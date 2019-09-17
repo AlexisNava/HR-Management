@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { memo } from 'react';
+import { Redirect } from 'react-router-dom';
 
-function Dashboard() {
-  return <h1>Dashboard</h1>;
-}
+const Dashboard = memo(({ isAdmin }) => {
+  if (isAdmin) {
+    return <h1>{isAdmin ? 'Admin' : 'Employee'} Dashboard </h1>;
+  }
+
+  return <Redirect to="/login" />;
+});
 
 export default Dashboard;

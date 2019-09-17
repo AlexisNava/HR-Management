@@ -17,8 +17,6 @@ const LogIn = memo(({ history }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  console.log('history', history);
-
   return (
     <div className="flex-container flex-container--center-content">
       <Paper>
