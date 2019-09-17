@@ -1,10 +1,20 @@
-import { takeLatest } from 'redux-saga/effects';
+import { takeLatest, put, call } from 'redux-saga/effects';
 
 // Actions
-import { LOG_IN } from './actions';
+import { LOG_IN, LOG_IN_SUCCESS, LOG_IN_FAILURE } from './actions';
 
-function* logInRequest() {}
+// Services
+import { logIn } from '../../../services';
 
-export function* logIn() {
+function* logInRequest({ email, password }) {
+  try {
+    const response = yield call(logIn, email, password);
+    yield put({ type: LOG_IN_SUCCESS, payload: response });
+  } catch (error) {
+    yield put({ type: LOG_IN_FAILURE });
+  }
+}
+
+export function* logInRequestWatcher() {
   yield takeLatest(LOG_IN, logInRequest);
 }

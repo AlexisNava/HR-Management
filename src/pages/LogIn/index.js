@@ -1,21 +1,21 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-// Hooks
-import { useTextFields } from '../../hooks';
+// Action Creators
+import { logIn } from '../../store/modules/user/actionCreators';
 
 // Styles
 import './LogIn.css';
 
 const LogIn = memo(() => {
-  const [values, handleChange] = useTextFields({
-    email: '',
-    password: '',
-  });
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <div className="flex-container flex-container--center-content">
@@ -36,8 +36,8 @@ const LogIn = memo(() => {
               type="text"
               margin="normal"
               variant="outlined"
-              value={values.name}
-              onChange={handleChange}
+              value={email}
+              onChange={event => setEmail(event.target.value)}
             />
           </div>
 
@@ -48,13 +48,22 @@ const LogIn = memo(() => {
               type="password"
               margin="normal"
               variant="outlined"
-              value={values.name}
-              onChange={handleChange}
+              value={password}
+              onChange={event => setPassword(event.target.value)}
             />
           </div>
 
           <div className="form__element">
-            <Button fullWidth variant="contained" color="primary">
+            <Button
+              fullWidth
+              variant="contained"
+              color="primary"
+              onClick={() => {
+                if (email && password) {
+                  return dispatch(logIn(email, password));
+                }
+              }}
+            >
               Log In
             </Button>
           </div>

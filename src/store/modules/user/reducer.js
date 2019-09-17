@@ -1,5 +1,5 @@
 // Actions
-import { LOG_IN, LOG_OUT } from './actions';
+import { LOG_IN_SUCCESS, LOG_OUT } from './actions';
 
 import { fromJS } from 'immutable';
 
@@ -13,7 +13,7 @@ const initialState = fromJS({
 
 const user = (state = initialState, action) => {
   switch (action.type) {
-    case LOG_IN:
+    case LOG_IN_SUCCESS:
       return state
         .set('token', action.payload.token)
         .set('id', action.payload.personalInformation.id)
