@@ -1,7 +1,10 @@
 import React from 'react';
 
+// MUI Components
+import Typography from '@material-ui/core/Typography';
+
 function NotFound() {
-  return <h1>Not Found</h1>;
+  return <Typography variant="h3">Not Found 404</Typography>;
 }
 
 export default NotFound;
