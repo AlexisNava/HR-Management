@@ -1,8 +1,7 @@
 import { LOG_IN, LOG_OUT } from './actions';
 
-export const logIn = dataUser => ({
+export const logIn = () => ({
   type: LOG_IN,
-  payload: dataUser,
 });
 
 export const logOut = () => ({
