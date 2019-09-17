@@ -36,7 +36,7 @@ const snackbar = memo(({ isOpen, message }) => {
 
 snackbar.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
+  message: PropTypes.string,
 };
 
 export default snackbar;
