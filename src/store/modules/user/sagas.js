@@ -1,7 +1,11 @@
 import { takeLatest, put, call } from 'redux-saga/effects';
 
 // Actions
-import { LOG_IN, LOG_IN_SUCCESS, LOG_IN_FAILURE } from './actions';
+import { LOG_IN } from './actions';
+
+// Action Creators
+import { logInSuccess } from './actionCreators';
+import { showNotification } from '../notification/actionCreators';
 
 // Services
 import { logIn } from '../../../services';
@@ -10,13 +14,9 @@ function* logInRequest({ email, password }) {
   try {
     const response = yield call(logIn, email, password);
 
-    if (response) {
-      yield put({ type: LOG_IN_SUCCESS, payload: response });
-    } else {
-      yield put({ type: LOG_IN_FAILURE });
-    }
+    yield put(logInSuccess(response));
   } catch (error) {
-    yield put({ type: LOG_IN_FAILURE });
+    yield put(showNotification({ message: 'Incorrect email or password.' }));
   }
 }
 
