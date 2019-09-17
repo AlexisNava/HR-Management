@@ -6,6 +6,9 @@ import Dashboard from '../pages/Dashboard';
 import NotFound from '../pages/NotFound';
 import LogIn from '../pages/LogIn';
 
+// Components
+import ProtectedRoute from '../components/protectedRoute';
+
 // Styles
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +21,7 @@ const Router = () => {
     <BrowserRouter>
       <MuiThemeProvider theme={theme}>
         <Switch>
-          <Route exact path="/" component={Dashboard} />
+          <ProtectedRoute exact path="/" component={Dashboard} />
           <Route path="/login" component={LogIn} />
           <Route component={NotFound} />
         </Switch>
