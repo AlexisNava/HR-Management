@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 
+// Components
+import NavBar from '../../components/NavBar';
+
 // Action Creators
 import { logOut } from '../../store/modules/user/actionCreators';
 
@@ -14,6 +17,8 @@ const Dashboard = memo(() => {
 
   return (
     <div>
+      <NavBar />
+
       <h1>{isAdMin ? 'Admin' : 'Employee'} Dashboard</h1>
 
       <Button

@@ -9,7 +9,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 
 const NavBar = memo(() => {
   return (
-    <AppBar>
+    <AppBar position="fixed">
       <div>
         <div>
           <div>
@@ -17,25 +17,25 @@ const NavBar = memo(() => {
           </div>
 
           <div>
-            <Typography>HR Management</Typography>
+            <Typography variant="h6">HR Management</Typography>
           </div>
         </div>
 
         <div>
           <div>
-            <Button>Position</Button>
+            <Button color="inherit">Position</Button>
           </div>
 
           <div>
-            <Button>Team</Button>
+            <Button color="inherit">Team</Button>
           </div>
 
           <div>
-            <Button>Employee</Button>
+            <Button color="inherit">Employee</Button>
           </div>
 
           <div>
-            <Button>Log Out</Button>
+            <Button color="inherit">Log Out</Button>
           </div>
         </div>
       </div>
