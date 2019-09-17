@@ -1,4 +1,4 @@
-import React, { memo, Fragment } from 'react';
+import React, { memo, Fragment, useState, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 
 // Components
@@ -11,13 +11,17 @@ import './Dashboard.css';
 const Dashboard = memo(() => {
   const isAdMin = useSelector(state => state.user.get('isAdmin'));
 
-  console.log('isAdMin', isAdMin);
+  const [drawerActionsIsOpen, setDrawerActionsIsOpen] = useState(false);
+
+  const changeDrawerIsOpen = useCallback(() => {
+    setDrawerActionsIsOpen(currentState => !currentState);
+  }, [drawerActionsIsOpen, setDrawerActionsIsOpen]);
 
   return (
     <Fragment>
-      <DrawerActions />
+      <DrawerActions isOpen={drawerActionsIsOpen} />
 
-      <NavBar />
+      <NavBar openDrawerActions={changeDrawerIsOpen} />
 
       <h1>{isAdMin ? 'Admin' : 'Employee'} Dashboard</h1>
     </Fragment>

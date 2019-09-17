@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
 
 // MUI Components
@@ -14,7 +15,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 // Action Creators
 import { logOut } from '../store/modules/user/actionCreators';
 
-const NavBar = memo(() => {
+const NavBar = memo(({ openDrawerActions }) => {
   const dispatch = useDispatch();
 
   return (
@@ -26,7 +27,7 @@ const NavBar = memo(() => {
           </div>
 
           <div className="navbar__item--mobile">
-            <IconButton color="inherit">
+            <IconButton color="inherit" onClick={() => openDrawerActions()}>
               <MenuIcon className="navbar__item--icon navbar__item--icon-mobile" />
             </IconButton>
           </div>
@@ -59,5 +60,9 @@ const NavBar = memo(() => {
     </AppBar>
   );
 });
+
+NavBar.propTypes = {
+  openDrawerActions: PropTypes.func.isRequired,
+};
 
 export default NavBar;
