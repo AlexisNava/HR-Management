@@ -8,8 +8,8 @@ import NotFound from '../pages/NotFound';
 import LogIn from '../pages/LogIn';
 
 // Components
-import ProtectedRoute from '../components/protectedRoute';
-import Snackbar from '../components/snackbar';
+import ProtectedRoute from '../components/ProtectedRoute';
+import Snackbar from '../components/Snackbar';
 
 // Styles
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
