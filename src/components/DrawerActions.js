@@ -7,16 +7,29 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Divider from '@material-ui/core/Divider';
+
+// Icons
+import CloseIcon from '@material-ui/icons/Close';
 
 // Action Creators
 import { logOut } from '../store/modules/user/actionCreators';
 
-const DrawerActions = memo(({ isOpen }) => {
+const DrawerActions = memo(({ isOpen, closeDrawerActions }) => {
   const dispatch = useDispatch();
 
   return (
     <Drawer open={isOpen}>
       <List>
+        <ListItem button onClick={() => closeDrawerActions()}>
+          <ListItemIcon>
+            <CloseIcon />
+          </ListItemIcon>
+        </ListItem>
+
+        <Divider />
+
         <ListItem button>
           <ListItemText primary="Position" />
         </ListItem>
@@ -39,6 +52,7 @@ const DrawerActions = memo(({ isOpen }) => {
 
 DrawerActions.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  closeDrawerActions: PropTypes.func.isRequired,
 };
 
 export default DrawerActions;

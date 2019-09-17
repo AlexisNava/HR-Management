@@ -15,11 +15,15 @@ const Dashboard = memo(() => {
 
   const changeDrawerIsOpen = useCallback(() => {
     setDrawerActionsIsOpen(currentState => !currentState);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [drawerActionsIsOpen, setDrawerActionsIsOpen]);
 
   return (
     <Fragment>
-      <DrawerActions isOpen={drawerActionsIsOpen} />
+      <DrawerActions
+        isOpen={drawerActionsIsOpen}
+        closeDrawerActions={changeDrawerIsOpen}
+      />
 
       <NavBar openDrawerActions={changeDrawerIsOpen} />
 
