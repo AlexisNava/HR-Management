@@ -22,9 +22,7 @@ const LogIn = memo(({ history }) => {
     if (isLogged === true) {
       history.push('/');
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isLogged]);
+  });
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -48,6 +46,7 @@ const LogIn = memo(({ history }) => {
               type="email"
               margin="normal"
               variant="outlined"
+              helperText="This field is required"
               value={email}
               onChange={event => setEmail(event.target.value)}
             />
@@ -60,6 +59,7 @@ const LogIn = memo(({ history }) => {
               type="password"
               margin="normal"
               variant="outlined"
+              helperText="This field is required"
               value={password}
               onChange={event => setPassword(event.target.value)}
             />
@@ -73,6 +73,7 @@ const LogIn = memo(({ history }) => {
               onClick={() => {
                 if (email && password) {
                   dispatch(logIn(email, password));
+                } else {
                 }
               }}
             >

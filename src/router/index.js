@@ -19,7 +19,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../utils/MUITheme';
 
 const Router = () => {
-  const state = useSelector(state => state);
   const notificationIsVisible = useSelector(state =>
     state.notification.get('isVisible'),
   );

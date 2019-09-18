@@ -8,7 +8,7 @@ import { logInSuccess } from './actionCreators';
 import { showNotification } from '../notification/actionCreators';
 
 // Services
-import { logIn, logOut } from '../../../services';
+import { logIn } from '../../../services';
 
 function* logInRequest({ email, password }) {
   try {

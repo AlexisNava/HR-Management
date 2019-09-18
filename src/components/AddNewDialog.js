@@ -21,8 +21,6 @@ const AddNewDialog = memo(({ isOpen, title, closeDialog, request }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-  console.log('render');
-
   return (
     <Dialog open={isOpen} fullScreen={fullScreen}>
       <DialogTitle>{title}</DialogTitle>
