@@ -96,7 +96,7 @@ export const addPosition = async (positionName, token) => {
   }
 };
 
-export const getAllPositions = async (positionName, token) => {
+export const getAllPositions = async token => {
   try {
     const response = await axios.get('http://0.0.0.0:4000/api/position', {
       headers: {
