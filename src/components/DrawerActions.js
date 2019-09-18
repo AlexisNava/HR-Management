@@ -16,43 +16,47 @@ import CloseIcon from '@material-ui/icons/Close';
 // Action Creators
 import { logOut } from '../store/modules/user/actionCreators';
 
-const DrawerActions = memo(({ isOpen, closeDrawerActions }) => {
-  const dispatch = useDispatch();
+const DrawerActions = memo(
+  ({ isOpen, closeDrawerActions, openPositionDialog, openTeamDialog }) => {
+    const dispatch = useDispatch();
 
-  return (
-    <Drawer open={isOpen}>
-      <List>
-        <ListItem button onClick={() => closeDrawerActions()}>
-          <ListItemIcon>
-            <CloseIcon />
-          </ListItemIcon>
-        </ListItem>
+    return (
+      <Drawer open={isOpen}>
+        <List>
+          <ListItem button onClick={() => closeDrawerActions()}>
+            <ListItemIcon>
+              <CloseIcon />
+            </ListItemIcon>
+          </ListItem>
 
-        <Divider />
+          <Divider />
 
-        <ListItem button>
-          <ListItemText primary="Position" />
-        </ListItem>
+          <ListItem button onClick={() => openPositionDialog()}>
+            <ListItemText primary="Position" />
+          </ListItem>
 
-        <ListItem button>
-          <ListItemText primary="Team" />
-        </ListItem>
+          <ListItem button onClick={() => openTeamDialog()}>
+            <ListItemText primary="Team" />
+          </ListItem>
 
-        <ListItem button>
-          <ListItemText primary="Employee" />
-        </ListItem>
+          <ListItem button>
+            <ListItemText primary="Employee" />
+          </ListItem>
 
-        <ListItem button onClick={() => dispatch(logOut())}>
-          <ListItemText primary="Log Out" />
-        </ListItem>
-      </List>
-    </Drawer>
-  );
-});
+          <ListItem button onClick={() => dispatch(logOut())}>
+            <ListItemText primary="Log Out" />
+          </ListItem>
+        </List>
+      </Drawer>
+    );
+  },
+);
 
 DrawerActions.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   closeDrawerActions: PropTypes.func.isRequired,
+  openPositionDialog: PropTypes.func.isRequired,
+  openTeamDialog: PropTypes.func.isRequired,
 };
 
 export default DrawerActions;

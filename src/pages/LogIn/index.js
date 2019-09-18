@@ -45,7 +45,7 @@ const LogIn = memo(({ history }) => {
             <TextField
               fullWidth
               label="Email"
-              type="text"
+              type="email"
               margin="normal"
               variant="outlined"
               value={email}
