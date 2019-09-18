@@ -9,10 +9,18 @@ import {
 } from './actions';
 
 // Services
-import { getTeamsEmployees, addPosition, addTeam } from '../../../services';
+import {
+  getTeamsEmployees,
+  addPosition,
+  addTeam,
+  getAllPositions,
+} from '../../../services';
 
 // Action Creators
-import { requestTeamsEmployeesSuccess } from './actionCreators';
+import {
+  requestTeamsEmployeesSuccess,
+  requestPositionsSuccess,
+} from './actionCreators';
 import { showNotification } from '../notification/actionCreators';
 import { logOut } from '../user/actionCreators';
 
@@ -80,8 +88,6 @@ export function* watcherAddPosition() {
 function* callAddTeam({ teamName }) {
   const token = yield select(state => state.user.get('token'));
 
-  console.log('callAddTeam', teamName);
-
   try {
     yield call(addTeam, teamName, token);
 
@@ -109,7 +115,31 @@ export function* watcherAddTeam() {
   yield takeLatest(REQUEST_ADD_TEAM, callAddTeam);
 }
 
-function* callGetAllPositions() {}
+function* callGetAllPositions() {
+  const token = yield select(state => state.user.get('token'));
+
+  try {
+    const response = yield call(getAllPositions, token);
+
+    yield put(requestPositionsSuccess({ positions: response }));
+  } catch (error) {
+    if (
+      error &&
+      error.data &&
+      error.data.errorMessage &&
+      error.data.errorMessage === 'jwt expired'
+    ) {
+      yield put(showNotification({ message: 'Session Expired' }));
+      yield put(logOut());
+    }
+
+    yield put(
+      showNotification({
+        message: 'Failure trying to get all the positions.',
+      }),
+    );
+  }
+}
 
 export function* watcherGetAllPositions() {
   yield takeLatest(REQUEST_POSITIONS, callGetAllPositions);

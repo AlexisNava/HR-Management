@@ -1,5 +1,7 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 // MUI Components
 import Dialog from '@material-ui/core/Dialog';
@@ -10,13 +12,77 @@ import TextField from '@material-ui/core/TextField';
 import DialogActions from '@material-ui/core/DialogActions';
 import Button from '@material-ui/core/Button';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import InputLabel from '@material-ui/core/InputLabel';
 
 // MUI Styles
 import { useTheme } from '@material-ui/core/styles';
 
+// Action Creators
+import { requestPositions } from '../store/modules/employeeUtils/actionCreators';
+
 const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  const dispatch = useDispatch();
+
+  const positions = useSelector(state => state.employeeUtils.get('positions'));
+
+  const [team, setTeam] = useState('');
+  const [position, setPosition] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [mothersName, setMothersName] = useState('');
+  const [teamError, setTeamError] = useState(false);
+  const [positionError, setPositionError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [nameError, setNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+
+  useEffect(() => {
+    dispatch(requestPositions());
+  }, [dispatch]);
+
+  function validateFields() {
+    if (!team) {
+      setTeamError(true);
+      return false;
+    }
+
+    if (!position) {
+      setPositionError(true);
+      return false;
+    }
+
+    if (!email) {
+      setEmailError(true);
+      return false;
+    }
+
+    if (!password) {
+      setPasswordError(true);
+      return false;
+    }
+
+    if (!name) {
+      setNameError(true);
+      return false;
+    }
+
+    if (!lastName) {
+      setLastNameError(true);
+      return false;
+    }
+
+    return true;
+  }
 
   return (
     <Dialog open={isOpen} fullScreen={fullScreen}>
@@ -25,23 +91,38 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
       <DialogContent>
         <DialogContentText>Add new Employee</DialogContentText>
 
-        <TextField
-          className="input--full-width"
-          margin="normal"
-          variant="outlined"
-          type="text"
-          helperText="This field is required"
-          label="Team"
-        />
+        <FormControl className="input--full-width" error={teamError}>
+          <InputLabel htmlFor="age-helper">Team</InputLabel>
 
-        <TextField
-          className="input--full-width"
-          margin="normal"
-          variant="outlined"
-          type="text"
-          helperText="This field is required"
-          label="Position"
-        />
+          <Select value={team} onChange={event => setTeam(event.target.value)}>
+            {Array.isArray(positions) &&
+              positions.map(position => (
+                <MenuItem key={position.id} value={position.id}>
+                  {position.name}
+                </MenuItem>
+              ))}
+          </Select>
+
+          <FormHelperText>This field is required</FormHelperText>
+        </FormControl>
+
+        <FormControl className="input--full-width" error={positionError}>
+          <InputLabel htmlFor="age-helper">Position</InputLabel>
+
+          <Select
+            value={position}
+            onChange={event => setPosition(event.target.value)}
+          >
+            {Array.isArray(positions) &&
+              positions.map(position => (
+                <MenuItem key={position.id} value={position.id}>
+                  {position.name}
+                </MenuItem>
+              ))}
+          </Select>
+
+          <FormHelperText>This field is required</FormHelperText>
+        </FormControl>
 
         <TextField
           className="input--full-width"
@@ -50,6 +131,9 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           type="text"
           helperText="This field is required"
           label="Email"
+          error={emailError}
+          value={email}
+          onChange={event => setEmail(event.target.value)}
         />
 
         <TextField
@@ -59,6 +143,9 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           type="text"
           helperText="This field is required"
           label="Password"
+          error={passwordError}
+          value={password}
+          onChange={event => setPassword(event.target.value)}
         />
 
         <TextField
@@ -68,6 +155,9 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           type="text"
           helperText="This field is required"
           label="Name"
+          error={nameError}
+          value={name}
+          onChange={event => setName(event.target.value)}
         />
 
         <TextField
@@ -77,6 +167,9 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           type="text"
           helperText="This field is required"
           label="Last Name"
+          error={lastNameError}
+          value={lastName}
+          onChange={event => setLastName(event.target.value)}
         />
 
         <TextField
@@ -85,6 +178,8 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           variant="outlined"
           type="text"
           label="Mother's Last Name"
+          value={mothersName}
+          onChange={event => setMothersName(event.target.value)}
         />
       </DialogContent>
 
@@ -93,7 +188,14 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           Cancel
         </Button>
 
-        <Button color="primary" onClick={() => closeDialog()}>
+        <Button
+          color="primary"
+          onClick={() => {
+            if (validateFields()) {
+              closeDialog();
+            }
+          }}
+        >
           Add
         </Button>
       </DialogActions>
