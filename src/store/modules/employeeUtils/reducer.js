@@ -18,9 +18,9 @@ const initialState = fromJS({
 const employeeUtils = (state = initialState, action) => {
   switch (action.type) {
     case REQUEST_POSITIONS_SUCCESS:
-      return state.set('positions', fromJS(action.payload.positions));
+      return state.set('positions', action.payload.positions);
     case REQUEST_TEAMS_SUCCESS:
-      return state.set('teams', fromJS(action.payload.teams));
+      return state.set('teams', action.payload.teams);
     case REQUEST_TEAMS_EMPLOYEES_SUCCESS:
       return state.set('teamsEmployees', action.payload.teamsEmployees);
     case REQUEST_ADD_EMPLOYEE_SUCCESS:

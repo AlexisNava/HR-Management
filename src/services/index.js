@@ -23,7 +23,7 @@ export const logIn = async (email, password) => {
 
 export const getTeamsEmployees = async token => {
   try {
-    const response = await axios.get('http://0.0.0.0:4000/api/team', {
+    const response = await axios.get('http://0.0.0.0:4000/api/team/employees', {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -81,6 +81,28 @@ export const addPosition = async (positionName, token) => {
         },
       },
     );
+
+    if (response && response.data && response.data.data) {
+      return response.data.data;
+    }
+
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data);
+    }
+
+    throw error;
+  }
+};
+
+export const getAllPositions = async (positionName, token) => {
+  try {
+    const response = await axios.get('http://0.0.0.0:4000/api/position', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     if (response && response.data && response.data.data) {
       return response.data.data;

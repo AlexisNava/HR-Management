@@ -5,6 +5,7 @@ import {
   REQUEST_TEAMS_EMPLOYEES,
   REQUEST_ADD_POSITION,
   REQUEST_ADD_TEAM,
+  REQUEST_POSITIONS,
 } from './actions';
 
 // Services
@@ -106,4 +107,10 @@ function* callAddTeam({ teamName }) {
 
 export function* watcherAddTeam() {
   yield takeLatest(REQUEST_ADD_TEAM, callAddTeam);
+}
+
+function* callGetAllPositions() {}
+
+export function* watcherGetAllPositions() {
+  yield takeLatest(REQUEST_POSITIONS, callGetAllPositions);
 }
