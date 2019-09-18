@@ -1,6 +1,6 @@
 .form {
-  padding: 5%;
-  min-width: 300px;
+  margin: 3% 30%;
+  padding: 2%;
 }
 
 .form__element {
@@ -14,23 +14,13 @@
 
 @media only screen and (max-width: 425px) {
   .form {
-    width: 425px;
-  }
-
-  .flex-container--center-content {
-    margin-top: 0px;
-    justify-content: normal;
+    margin: 3% 5%;
+    padding: 2%;
   }
 }
 
 @media only screen and (max-width: 375px) {
-  .form {
-    width: 375px;
-  }
 }
 
 @media only screen and (max-width: 320px) {
-  .form {
-    width: 320px;
-  }
 }
