@@ -21,7 +21,7 @@ export const logIn = async (email, password) => {
   }
 };
 
-export const getTeams = async token => {
+export const getTeamsEmployees = async token => {
   try {
     const response = await axios.get('http://0.0.0.0:4000/api/team', {
       headers: {
@@ -37,6 +37,7 @@ export const getTeams = async token => {
   } catch (error) {
     if (error.response) {
       console.log(error.response.data);
+      throw error.response;
     }
 
     throw error;

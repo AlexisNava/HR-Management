@@ -1,5 +1,5 @@
-import React, { memo, useState, useEffect, Fragment } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { memo, useState, Fragment, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 // MUI Components
 import Paper from '@material-ui/core/Paper';
@@ -21,40 +21,27 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 
-// Services
-import { getTeams } from '../services';
-
-// Action Creators
-import { logOut } from '../store/modules/user/actionCreators';
+// Action Creator
+import { requestTeamsEmployees } from '../store/modules/employeeUtils/actionCreators';
 
 const TeamList = memo(() => {
   const dispatch = useDispatch();
-  const token = useSelector(state => state.user.get('token'));
 
-  const [teams, setTeams] = useState([]);
+  const teamsEmployees = useSelector(state =>
+    state.employeeUtils.get('teamsEmployees'),
+  );
+
   const [state, setState] = useState({});
 
   useEffect(() => {
-    getTeams(token)
-      .then(response => {
-        setTeams(response);
-      })
-      .catch(error => {
-        if (
-          error.response &&
-          error.response.data &&
-          error.response.data.errorMessage === 'jwt expired'
-        ) {
-          dispatch(logOut());
-        }
-      });
-  }, [dispatch, token]);
+    dispatch(requestTeamsEmployees());
+  }, [dispatch]);
 
-  if (teams && teams.length > 0) {
+  if (teamsEmployees && teamsEmployees.length > 0) {
     return (
       <Paper className="team-list">
         <List>
-          {teams.map(team => (
+          {teamsEmployees.map(team => (
             <Fragment key={team.id}>
               <ListItem
                 button
