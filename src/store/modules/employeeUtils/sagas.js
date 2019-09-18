@@ -154,8 +154,6 @@ function* callGetAllTeams() {
   try {
     const response = yield call(getAllTeams, token);
 
-    console.log('response', response);
-
     yield put(requestTeamsSuccess({ teams: response }));
   } catch (error) {
     if (

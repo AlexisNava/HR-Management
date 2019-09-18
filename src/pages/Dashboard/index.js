@@ -52,7 +52,6 @@ const Dashboard = memo(() => {
 
   const dispatchAddTeam = useCallback(
     teamName => {
-      console.log('dispatchAddTeam', teamName);
       dispatch(requestAddTeam(teamName));
     },
     [dispatch],
