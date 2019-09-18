@@ -20,6 +20,6 @@ function* logInRequest({ email, password }) {
   }
 }
 
-export function* logInRequestWatcher() {
+export function* watcherLogInRequest() {
   yield takeLatest(LOG_IN, logInRequest);
 }

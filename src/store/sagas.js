@@ -1,11 +1,11 @@
 import { all } from 'redux-saga/effects';
 
 // Sagas
-import { logInRequestWatcher } from './modules/user/sagas';
+import { watcherLogInRequest } from './modules/user/sagas';
 import { watcherEmployeeUtils } from './modules/employeeUtils/sagas';
 
 function* rootSaga() {
-  yield all([logInRequestWatcher(), watcherEmployeeUtils()]);
+  yield all([watcherLogInRequest(), watcherEmployeeUtils()]);
 }
 
 export default rootSaga;
