@@ -117,3 +117,25 @@ export const getAllPositions = async token => {
     throw error;
   }
 };
+
+export const getAllTeams = async token => {
+  try {
+    const response = await axios.get('http://0.0.0.0:4000/api/team', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response && response.data && response.data.data) {
+      return response.data.data;
+    }
+
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data);
+    }
+
+    throw error;
+  }
+};

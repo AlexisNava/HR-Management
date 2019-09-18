@@ -7,6 +7,7 @@ import {
   watcherAddPosition,
   watcherAddTeam,
   watcherGetAllPositions,
+  watcherGetAllTeams,
 } from './modules/employeeUtils/sagas';
 
 function* rootSaga() {
@@ -16,6 +17,7 @@ function* rootSaga() {
     watcherAddPosition(),
     watcherAddTeam(),
     watcherGetAllPositions(),
+    watcherGetAllTeams(),
   ]);
 }
 

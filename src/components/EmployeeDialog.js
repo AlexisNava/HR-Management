@@ -22,7 +22,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import { useTheme } from '@material-ui/core/styles';
 
 // Action Creators
-import { requestPositions } from '../store/modules/employeeUtils/actionCreators';
+import {
+  requestPositions,
+  requestTeams,
+} from '../store/modules/employeeUtils/actionCreators';
 
 const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
   const theme = useTheme();
@@ -31,6 +34,7 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
   const dispatch = useDispatch();
 
   const positions = useSelector(state => state.employeeUtils.get('positions'));
+  const teams = useSelector(state => state.employeeUtils.get('teams'));
 
   const [team, setTeam] = useState('');
   const [position, setPosition] = useState('');
@@ -48,6 +52,7 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
 
   useEffect(() => {
     dispatch(requestPositions());
+    dispatch(requestTeams());
   }, [dispatch]);
 
   function validateFields() {
@@ -95,10 +100,10 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           <InputLabel htmlFor="age-helper">Team</InputLabel>
 
           <Select value={team} onChange={event => setTeam(event.target.value)}>
-            {Array.isArray(positions) &&
-              positions.map(position => (
-                <MenuItem key={position.id} value={position.id}>
-                  {position.name}
+            {Array.isArray(teams) &&
+              teams.map(team => (
+                <MenuItem key={team.id} value={team.id}>
+                  {team.name}
                 </MenuItem>
               ))}
           </Select>
