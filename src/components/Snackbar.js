@@ -14,12 +14,11 @@ const snackbar = memo(({ isOpen, message }) => {
 
   return (
     <Snackbar
-      autoHideDuration={6000}
+      autoHideDuration={3000}
       message={<span>{message}</span>}
       open={isOpen}
       onClose={() => {
         dispatch(hideNotification());
-        window.location.reload(false);
       }}
       anchorOrigin={{
         vertical: 'bottom',
@@ -34,7 +33,7 @@ const snackbar = memo(({ isOpen, message }) => {
             window.location.reload(false);
           }}
         >
-          OK
+          OK, LOAD CHANGES
         </Button>,
       ]}
     />
