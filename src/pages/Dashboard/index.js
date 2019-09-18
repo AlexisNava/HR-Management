@@ -4,13 +4,12 @@ import { useSelector } from 'react-redux';
 // Components
 import NavBar from '../../components/NavBar';
 import DrawerActions from '../../components/DrawerActions';
+import TeamList from '../../components/TeamList';
 
 // Styles
 import './Dashboard.css';
 
 const Dashboard = memo(() => {
-  const isAdMin = useSelector(state => state.user.get('isAdmin'));
-
   const [drawerActionsIsOpen, setDrawerActionsIsOpen] = useState(false);
 
   const changeDrawerIsOpen = useCallback(() => {
@@ -27,7 +26,7 @@ const Dashboard = memo(() => {
 
       <NavBar openDrawerActions={changeDrawerIsOpen} />
 
-      <h1>{isAdMin ? 'Admin' : 'Employee'} Dashboard</h1>
+      <TeamList />
     </Fragment>
   );
 });

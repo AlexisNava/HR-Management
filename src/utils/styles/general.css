@@ -14,3 +14,9 @@
 .flex-container--row-reverse {
   flex-direction: row-reverse;
 }
+
+.avatar {
+  margin: 2% !important;
+  color: #fff !important;
+  background: #f5a623 !important;
+}
