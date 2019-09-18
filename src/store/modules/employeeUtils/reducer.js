@@ -5,14 +5,12 @@ import {
   REQUEST_POSITIONS_SUCCESS,
   REQUEST_TEAMS_SUCCESS,
   REQUEST_TEAMS_EMPLOYEES_SUCCESS,
-  REQUEST_ADD_EMPLOYEE_SUCCESS,
 } from './actions';
 
 const initialState = fromJS({
   positions: null,
   teams: null,
   teamsEmployees: null,
-  addEmployee: false,
 });
 
 const employeeUtils = (state = initialState, action) => {
@@ -23,8 +21,6 @@ const employeeUtils = (state = initialState, action) => {
       return state.set('teams', action.payload.teams);
     case REQUEST_TEAMS_EMPLOYEES_SUCCESS:
       return state.set('teamsEmployees', action.payload.teamsEmployees);
-    case REQUEST_ADD_EMPLOYEE_SUCCESS:
-      return state.set('addEmployee', action.payload);
     default:
       return state;
   }

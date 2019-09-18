@@ -25,6 +25,7 @@ import { useTheme } from '@material-ui/core/styles';
 import {
   requestPositions,
   requestTeams,
+  requestAddEmployee,
 } from '../store/modules/employeeUtils/actionCreators';
 
 const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
@@ -49,6 +50,7 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
   const [passwordError, setPasswordError] = useState(false);
   const [nameError, setNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
+  const [mothersNameError, setMothersNameError] = useState(false);
 
   useEffect(() => {
     dispatch(requestPositions());
@@ -86,7 +88,22 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
       return false;
     }
 
+    if (!mothersName) {
+      setMothersNameError(true);
+      return false;
+    }
+
     return true;
+  }
+
+  function clearStates() {
+    setTeam('');
+    setPosition('');
+    setEmail('');
+    setPassword('');
+    setName('');
+    setLastName('');
+    setMothersName('');
   }
 
   return (
@@ -145,7 +162,7 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           className="input--full-width"
           margin="normal"
           variant="outlined"
-          type="text"
+          type="password"
           helperText="This field is required"
           label="Password"
           error={passwordError}
@@ -182,14 +199,22 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           margin="normal"
           variant="outlined"
           type="text"
+          helperText="This field is required"
           label="Mother's Last Name"
+          error={mothersNameError}
           value={mothersName}
           onChange={event => setMothersName(event.target.value)}
         />
       </DialogContent>
 
       <DialogActions>
-        <Button color="primary" onClick={() => closeDialog()}>
+        <Button
+          color="primary"
+          onClick={() => {
+            clearStates();
+            closeDialog();
+          }}
+        >
           Cancel
         </Button>
 
@@ -197,8 +222,21 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
           color="primary"
           onClick={() => {
             if (validateFields()) {
-              closeDialog();
+              dispatch(
+                requestAddEmployee(
+                  team,
+                  position,
+                  email,
+                  password,
+                  name,
+                  lastName,
+                  mothersName,
+                ),
+              );
             }
+
+            clearStates();
+            closeDialog();
           }}
         >
           Add

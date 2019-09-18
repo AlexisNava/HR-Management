@@ -7,6 +7,7 @@ import {
   REQUEST_ADD_TEAM,
   REQUEST_POSITIONS,
   REQUEST_TEAMS,
+  REQUEST_ADD_EMPLOYEE,
 } from './actions';
 
 // Services
@@ -16,6 +17,7 @@ import {
   addTeam,
   getAllPositions,
   getAllTeams,
+  addEmployee,
 } from '../../../services';
 
 // Action Creators
@@ -176,4 +178,64 @@ function* callGetAllTeams() {
 
 export function* watcherGetAllTeams() {
   yield takeLatest(REQUEST_TEAMS, callGetAllTeams);
+}
+
+function* callAddEmployee({
+  team,
+  position,
+  email,
+  password,
+  name,
+  lastName,
+  mothersName,
+}) {
+  const token = yield select(state => state.user.get('token'));
+
+  try {
+    const response = yield call(
+      addEmployee,
+      token,
+      team,
+      position,
+      email,
+      password,
+      name,
+      lastName,
+      mothersName,
+    );
+
+    console.log('team', team);
+    console.log('position', position);
+    console.log('email', email);
+    console.log('password', password);
+    console.log('name', name);
+    console.log('lastName', lastName);
+    console.log('mothersName', mothersName);
+
+    console.log('response', response);
+
+    yield put(
+      showNotification({ message: 'Added new Employee successfully.' }),
+    );
+  } catch (error) {
+    if (
+      error &&
+      error.data &&
+      error.data.errorMessage &&
+      error.data.errorMessage === 'jwt expired'
+    ) {
+      yield put(showNotification({ message: 'Session Expired' }));
+      yield put(logOut());
+    }
+
+    yield put(
+      showNotification({
+        message: 'Failure trying to create a new Employee.',
+      }),
+    );
+  }
+}
+
+export function* watcherAddEmployee() {
+  yield takeLatest(REQUEST_ADD_EMPLOYEE, callAddEmployee);
 }

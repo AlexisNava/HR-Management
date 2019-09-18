@@ -139,3 +139,46 @@ export const getAllTeams = async token => {
     throw error;
   }
 };
+
+export const addEmployee = async (
+  token,
+  team,
+  position,
+  email,
+  password,
+  name,
+  lastName,
+  mothersName,
+) => {
+  try {
+    const response = await axios.post(
+      'http://0.0.0.0:4000/api/auth/register',
+      {
+        team,
+        position,
+        email,
+        password,
+        name,
+        lastName,
+        mothersName,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (response && response.data && response.data.data) {
+      return response.data.data;
+    }
+
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data);
+    }
+
+    throw error;
+  }
+};

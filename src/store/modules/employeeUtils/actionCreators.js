@@ -5,7 +5,6 @@ import {
   REQUEST_TEAMS,
   REQUEST_TEAMS_SUCCESS,
   REQUEST_ADD_EMPLOYEE,
-  REQUEST_ADD_EMPLOYEE_SUCCESS,
   REQUEST_TEAMS_EMPLOYEES,
   REQUEST_TEAMS_EMPLOYEES_SUCCESS,
   REQUEST_ADD_POSITION,
@@ -24,12 +23,23 @@ export const requestTeamsSuccess = payload => ({
   payload,
 });
 
-export const requestAddEmployee = () => ({
+export const requestAddEmployee = (
+  team,
+  position,
+  email,
+  password,
+  name,
+  lastName,
+  mothersName,
+) => ({
   type: REQUEST_ADD_EMPLOYEE,
-});
-export const requestAddEmployeeSuccess = payload => ({
-  type: REQUEST_ADD_EMPLOYEE_SUCCESS,
-  payload,
+  team,
+  position,
+  email,
+  password,
+  name,
+  lastName,
+  mothersName,
 });
 
 export const requestTeamsEmployees = () => ({ type: REQUEST_TEAMS_EMPLOYEES });
