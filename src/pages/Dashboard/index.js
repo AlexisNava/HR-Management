@@ -9,11 +9,12 @@ import AddNewDialog from '../../components/AddNewDialog';
 import EmployeeDialog from '../../components/EmployeeDialog';
 
 // Services
-import { addTeam, addPosition } from '../../services';
+import { addTeam } from '../../services';
 
 // Action Crators
 import { showNotification } from '../../store/modules/notification/actionCreators';
 import { logOut } from '../../store/modules/user/actionCreators';
+import { requestAddPosition } from '../../store/modules/employeeUtils/actionCreators';
 
 // Styles
 import './Dashboard.css';
@@ -51,29 +52,6 @@ const Dashboard = memo(() => {
     }
   };
 
-  const addPositionRequest = async positionName => {
-    try {
-      await addPosition(positionName, token);
-
-      dispatch(showNotification({ message: 'Added new position succesfully' }));
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.data &&
-        error.response.data.errorMessage === 'jwt expired'
-      ) {
-        dispatch(logOut());
-      }
-
-      dispatch(
-        showNotification({
-          message:
-            'Failure trying to add a new position. Verify your information.',
-        }),
-      );
-    }
-  };
-
   // Callbacks
   const changeDrawerIsOpen = useCallback(() => {
     setDrawerActionsIsOpen(currentState => !currentState);
@@ -91,6 +69,13 @@ const Dashboard = memo(() => {
     setEmployeeDialogIsOpen(currentState => !currentState);
   }, [setEmployeeDialogIsOpen]);
 
+  const dispatchAddPosition = useCallback(
+    positionName => {
+      dispatch(requestAddPosition(positionName));
+    },
+    [dispatch],
+  );
+
   return (
     <Fragment>
       <DrawerActions
@@ -105,7 +90,7 @@ const Dashboard = memo(() => {
         isOpen={positionDialogIsOpen}
         title="Position"
         closeDialog={changePositionDialogIsOpen}
-        request={addPositionRequest}
+        request={dispatchAddPosition}
       />
 
       <AddNewDialog
