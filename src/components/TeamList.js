@@ -1,4 +1,5 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useState, useEffect, Fragment } from 'react';
+import { useSelector } from 'react-redux';
 
 // MUI Components
 import Paper from '@material-ui/core/Paper';
@@ -19,66 +20,78 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import RecentActorsIcon from '@material-ui/icons/RecentActors';
 import PostAddIcon from '@material-ui/icons/PostAdd';
 
+// Services
+import { getTeams } from '../services';
+
 const TeamList = memo(() => {
-  const [isListOpen, setIsListOpen] = useState(false);
+  const token = useSelector(state => state.user.get('token'));
+
+  const [teams, setTeams] = useState([]);
+  const [state, setState] = useState({});
+
+  useEffect(() => {
+    getTeams(token).then(response => {
+      setTeams(response);
+    });
+  }, [token]);
 
   return (
     <Paper className="team-list">
       <List>
-        <ListItem
-          button
-          onClick={event => {
-            console.log('event', event.target);
-            setIsListOpen(currentState => !currentState);
-          }}
-        >
-          <ListItemIcon>
-            <RecentActorsIcon className="team-list__item-icon" />
-          </ListItemIcon>
-
-          <ListItemText primary="Back End" secondary="1 Member" />
-          {isListOpen ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-        </ListItem>
-
-        <Collapse in={isListOpen} timeout="auto" unmountOnExit>
-          <List>
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar className="avatar">
-                  <AccountCircleIcon />
-                </Avatar>
-              </ListItemAvatar>
+        {teams.map(team => (
+          <Fragment key={team.id}>
+            <ListItem
+              button
+              onClick={event => {
+                setState(prevState => ({
+                  ...prevState,
+                  [team.name]: !state[team.name] || false,
+                }));
+              }}
+            >
+              <ListItemIcon>
+                <RecentActorsIcon className="team-list__item-icon" />
+              </ListItemIcon>
 
               <ListItemText
-                primary="Jared Letto"
-                secondary="Back End Developer"
+                primary={team.name}
+                secondary={
+                  team.employees.length > 1 || team.employees.length === 0
+                    ? `${team.employees.length} Members`
+                    : '1 Member'
+                }
               />
-
-              <ListItemSecondaryAction>
-                <IconButton>
-                  <PostAddIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
+              {state[team.name] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
             </ListItem>
 
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar className="avatar">
-                  <AccountCircleIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText
-                primary="Jared Letto"
-                secondary="Back End Developer"
-              />
-              <ListItemSecondaryAction>
-                <IconButton>
-                  <PostAddIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          </List>
-        </Collapse>
+            <Collapse in={state[team.name]} timeout="auto" unmountOnExit>
+              <List>
+                {team.employees.map(employee => (
+                  <ListItem alignItems="flex-start">
+                    <ListItemAvatar>
+                      <Avatar className="avatar">
+                        <AccountCircleIcon />
+                      </Avatar>
+                    </ListItemAvatar>
+
+                    <ListItemText
+                      primary={`${employee.name} ${
+                        employee.lastName
+                      } ${employee.mothersName || ''}`}
+                      secondary="Back End Developer"
+                    />
+
+                    <ListItemSecondaryAction>
+                      <IconButton>
+                        <PostAddIcon />
+                      </IconButton>
+                    </ListItemSecondaryAction>
+                  </ListItem>
+                ))}
+              </List>
+            </Collapse>
+          </Fragment>
+        ))}
       </List>
     </Paper>
   );

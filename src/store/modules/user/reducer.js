@@ -19,9 +19,7 @@ const user = (state = initialState, action) => {
         .set('isLogged', true)
         .set('token', action.payload.token)
         .set('id', action.payload.userInformation.id)
-        .set('isAdmin', action.payload.userInformation.isAdmin)
-        .set('name', action.payload.userInformation.name)
-        .set('lastName', action.payload.userInformation.lastName);
+        .set('isAdmin', action.payload.userInformation.isAdmin);
     case LOG_OUT:
       return initialState;
     default:

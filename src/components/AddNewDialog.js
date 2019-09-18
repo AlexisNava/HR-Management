@@ -14,11 +14,14 @@ import useMediaQuery from '@material-ui/core/useMediaQuery';
 // MUI Styles
 import { useTheme } from '@material-ui/core/styles';
 
-const AddNewDialog = memo(({ isOpen, title, closeDialog }) => {
+const AddNewDialog = memo(({ isOpen, title, closeDialog, request }) => {
   const [name, setName] = useState('');
+  const [nameError, setNameError] = useState(false);
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+  console.log('render');
 
   return (
     <Dialog open={isOpen} fullScreen={fullScreen}>
@@ -33,6 +36,9 @@ const AddNewDialog = memo(({ isOpen, title, closeDialog }) => {
           className="input--full-width"
           margin="normal"
           variant="outlined"
+          type="text"
+          helperText="This field is required"
+          error={nameError}
           label={title}
           value={name}
           onChange={event => setName(event.target.value)}
@@ -40,11 +46,43 @@ const AddNewDialog = memo(({ isOpen, title, closeDialog }) => {
       </DialogContent>
 
       <DialogActions>
-        <Button onClick={() => closeDialog()} color="primary">
+        <Button
+          onClick={() => {
+            // Clear the input
+            setName('');
+
+            // Deactivate the error
+            setNameError(false);
+
+            // Close Dialog
+            closeDialog();
+          }}
+          color="primary"
+        >
           Cancel
         </Button>
 
-        <Button onClick={() => closeDialog()} color="primary">
+        <Button
+          onClick={async () => {
+            if (name) {
+              // Make Request
+              await request(name);
+
+              // Clear the input
+              setName('');
+
+              // Deactivate the error
+              setNameError(false);
+
+              // Close the dialog
+              closeDialog();
+            } else {
+              // Activate the error
+              setNameError(true);
+            }
+          }}
+          color="primary"
+        >
           Add
         </Button>
       </DialogActions>
@@ -56,6 +94,7 @@ AddNewDialog.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   title: PropTypes.string.isRequired,
   closeDialog: PropTypes.func.isRequired,
+  request: PropTypes.func.isRequired,
 };
 
 export default AddNewDialog;
