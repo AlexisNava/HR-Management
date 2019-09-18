@@ -8,10 +8,11 @@ import TeamList from '../../components/TeamList';
 import AddNewDialog from '../../components/AddNewDialog';
 
 // Services
-import { addTeam } from '../../services';
+import { addTeam, addPosition } from '../../services';
 
 // Action Crators
 import { showNotification } from '../../store/modules/notification/actionCreators';
+import { logOut } from '../../store/modules/user/actionCreators';
 
 // Styles
 import './Dashboard.css';
@@ -32,9 +33,40 @@ const Dashboard = memo(() => {
 
       dispatch(showNotification({ message: 'Added new team succesfully' }));
     } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.errorMessage === 'jwt expired'
+      ) {
+        dispatch(logOut());
+      }
+
       dispatch(
         showNotification({
           message: 'Failure trying to add a new team. Verify your information.',
+        }),
+      );
+    }
+  };
+
+  const addPositionRequest = async positionName => {
+    try {
+      await addPosition(positionName, token);
+
+      dispatch(showNotification({ message: 'Added new position succesfully' }));
+    } catch (error) {
+      if (
+        error.response &&
+        error.response.data &&
+        error.response.data.errorMessage === 'jwt expired'
+      ) {
+        dispatch(logOut());
+      }
+
+      dispatch(
+        showNotification({
+          message:
+            'Failure trying to add a new position. Verify your information.',
         }),
       );
     }
@@ -66,6 +98,7 @@ const Dashboard = memo(() => {
         isOpen={positionDialogIsOpen}
         title="Position"
         closeDialog={changePositionDialogIsOpen}
+        request={addPositionRequest}
       />
 
       <AddNewDialog

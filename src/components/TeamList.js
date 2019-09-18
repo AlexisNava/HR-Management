@@ -1,5 +1,5 @@
 import React, { memo, useState, useEffect, Fragment } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // MUI Components
 import Paper from '@material-ui/core/Paper';
@@ -12,6 +12,7 @@ import Avatar from '@material-ui/core/Avatar';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+import Typography from '@material-ui/core/Typography';
 
 // MUI Icons
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
@@ -23,78 +24,96 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 // Services
 import { getTeams } from '../services';
 
+// Action Creators
+import { logOut } from '../store/modules/user/actionCreators';
+
 const TeamList = memo(() => {
+  const dispatch = useDispatch();
   const token = useSelector(state => state.user.get('token'));
 
   const [teams, setTeams] = useState([]);
   const [state, setState] = useState({});
 
   useEffect(() => {
-    getTeams(token).then(response => {
-      setTeams(response);
-    });
-  }, [token]);
+    getTeams(token)
+      .then(response => {
+        setTeams(response);
+      })
+      .catch(error => {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.errorMessage === 'jwt expired'
+        ) {
+          dispatch(logOut());
+        }
+      });
+  }, [dispatch, token]);
 
-  return (
-    <Paper className="team-list">
-      <List>
-        {teams.map(team => (
-          <Fragment key={team.id}>
-            <ListItem
-              button
-              onClick={event => {
-                setState(prevState => ({
-                  ...prevState,
-                  [team.name]: !state[team.name] || false,
-                }));
-              }}
-            >
-              <ListItemIcon>
-                <RecentActorsIcon className="team-list__item-icon" />
-              </ListItemIcon>
+  if (teams && teams.length > 0) {
+    return (
+      <Paper className="team-list">
+        <List>
+          {teams.map(team => (
+            <Fragment key={team.id}>
+              <ListItem
+                button
+                onClick={event => {
+                  setState(prevState => ({
+                    ...prevState,
+                    [team.name]: !state[team.name] || false,
+                  }));
+                }}
+              >
+                <ListItemIcon>
+                  <RecentActorsIcon className="team-list__item-icon" />
+                </ListItemIcon>
 
-              <ListItemText
-                primary={team.name}
-                secondary={
-                  team.employees.length > 1 || team.employees.length === 0
-                    ? `${team.employees.length} Members`
-                    : '1 Member'
-                }
-              />
-              {state[team.name] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-            </ListItem>
+                <ListItemText
+                  primary={team.name}
+                  secondary={
+                    team.employees.length > 1 || team.employees.length === 0
+                      ? `${team.employees.length} Members`
+                      : '1 Member'
+                  }
+                />
+                {state[team.name] ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+              </ListItem>
 
-            <Collapse in={state[team.name]} timeout="auto" unmountOnExit>
-              <List>
-                {team.employees.map(employee => (
-                  <ListItem alignItems="flex-start">
-                    <ListItemAvatar>
-                      <Avatar className="avatar">
-                        <AccountCircleIcon />
-                      </Avatar>
-                    </ListItemAvatar>
+              <Collapse in={state[team.name]} timeout="auto" unmountOnExit>
+                <List>
+                  {team.employees.map(employee => (
+                    <ListItem alignItems="flex-start">
+                      <ListItemAvatar>
+                        <Avatar className="avatar">
+                          <AccountCircleIcon />
+                        </Avatar>
+                      </ListItemAvatar>
 
-                    <ListItemText
-                      primary={`${employee.name} ${
-                        employee.lastName
-                      } ${employee.mothersName || ''}`}
-                      secondary="Back End Developer"
-                    />
+                      <ListItemText
+                        primary={`${employee.name} ${
+                          employee.lastName
+                        } ${employee.mothersName || ''}`}
+                        secondary="Back End Developer"
+                      />
 
-                    <ListItemSecondaryAction>
-                      <IconButton>
-                        <PostAddIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-            </Collapse>
-          </Fragment>
-        ))}
-      </List>
-    </Paper>
-  );
+                      <ListItemSecondaryAction>
+                        <IconButton>
+                          <PostAddIcon />
+                        </IconButton>
+                      </ListItemSecondaryAction>
+                    </ListItem>
+                  ))}
+                </List>
+              </Collapse>
+            </Fragment>
+          ))}
+        </List>
+      </Paper>
+    );
+  }
+
+  return <Typography variant="h6">You don't have teams yet!</Typography>;
 });
 
 export default TeamList;

@@ -27,8 +27,6 @@ const Router = () => {
     state.notification.get('message'),
   );
 
-  console.log('state', state);
-
   return (
     <BrowserRouter>
       <MuiThemeProvider theme={theme}>
