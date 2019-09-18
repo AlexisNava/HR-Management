@@ -16,7 +16,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { logOut } from '../store/modules/user/actionCreators';
 
 const NavBar = memo(
-  ({ openDrawerActions, openPositionDialog, openTeamDialog }) => {
+  ({
+    openDrawerActions,
+    openPositionDialog,
+    openTeamDialog,
+    openEmployeeDialog,
+  }) => {
     const dispatch = useDispatch();
 
     return (
@@ -46,7 +51,9 @@ const NavBar = memo(
             </div>
 
             <div className="navbar__item">
-              <Button color="inherit">Employee</Button>
+              <Button color="inherit" onClick={() => openEmployeeDialog()}>
+                Employee
+              </Button>
             </div>
 
             <div className="navbar__item">
@@ -71,6 +78,7 @@ NavBar.propTypes = {
   openDrawerActions: PropTypes.func.isRequired,
   openPositionDialog: PropTypes.func.isRequired,
   openTeamDialog: PropTypes.func.isRequired,
+  openEmployeeDialog: PropTypes.func.isRequired,
 };
 
 export default NavBar;

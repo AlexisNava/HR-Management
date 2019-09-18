@@ -6,6 +6,7 @@ import NavBar from '../../components/NavBar';
 import DrawerActions from '../../components/DrawerActions';
 import TeamList from '../../components/TeamList';
 import AddNewDialog from '../../components/AddNewDialog';
+import EmployeeDialog from '../../components/EmployeeDialog';
 
 // Services
 import { addTeam, addPosition } from '../../services';
@@ -25,6 +26,7 @@ const Dashboard = memo(() => {
   const [drawerActionsIsOpen, setDrawerActionsIsOpen] = useState(false);
   const [positionDialogIsOpen, setPositionDialogIsOpen] = useState(false);
   const [teamDialogIsOpen, setTeamDialogIsOpen] = useState(false);
+  const [employeeDialogIsOpen, setEmployeeDialogIsOpen] = useState(false);
 
   // Requests
   const addTeamRequest = async teamName => {
@@ -85,6 +87,10 @@ const Dashboard = memo(() => {
     setTeamDialogIsOpen(currentState => !currentState);
   }, [setTeamDialogIsOpen]);
 
+  const changeEmmployeeDialogIsOpen = useCallback(() => {
+    setEmployeeDialogIsOpen(currentState => !currentState);
+  }, [setEmployeeDialogIsOpen]);
+
   return (
     <Fragment>
       <DrawerActions
@@ -92,6 +98,7 @@ const Dashboard = memo(() => {
         closeDrawerActions={changeDrawerIsOpen}
         openPositionDialog={changePositionDialogIsOpen}
         openTeamDialog={changeTeamDialogIsOpen}
+        openEmployeeDialog={changeEmmployeeDialogIsOpen}
       />
 
       <AddNewDialog
@@ -108,10 +115,16 @@ const Dashboard = memo(() => {
         request={addTeamRequest}
       />
 
+      <EmployeeDialog
+        isOpen={employeeDialogIsOpen}
+        closeDialog={changeEmmployeeDialogIsOpen}
+      />
+
       <NavBar
         openDrawerActions={changeDrawerIsOpen}
         openPositionDialog={changePositionDialogIsOpen}
         openTeamDialog={changeTeamDialogIsOpen}
+        openEmployeeDialog={changeEmmployeeDialogIsOpen}
       />
 
       <TeamList />

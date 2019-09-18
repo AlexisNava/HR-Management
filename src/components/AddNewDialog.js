@@ -27,7 +27,7 @@ const AddNewDialog = memo(({ isOpen, title, closeDialog, request }) => {
 
       <DialogContent>
         <DialogContentText>
-          {`Add ${title} for your new users.`}
+          {`Add ${title} for your new Employees.`}
         </DialogContentText>
 
         <TextField

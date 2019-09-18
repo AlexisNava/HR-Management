@@ -17,7 +17,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import { logOut } from '../store/modules/user/actionCreators';
 
 const DrawerActions = memo(
-  ({ isOpen, closeDrawerActions, openPositionDialog, openTeamDialog }) => {
+  ({
+    isOpen,
+    closeDrawerActions,
+    openPositionDialog,
+    openTeamDialog,
+    openEmployeeDialog,
+  }) => {
     const dispatch = useDispatch();
 
     return (
@@ -39,7 +45,7 @@ const DrawerActions = memo(
             <ListItemText primary="Team" />
           </ListItem>
 
-          <ListItem button>
+          <ListItem button onClick={() => openEmployeeDialog()}>
             <ListItemText primary="Employee" />
           </ListItem>
 
@@ -57,6 +63,7 @@ DrawerActions.propTypes = {
   closeDrawerActions: PropTypes.func.isRequired,
   openPositionDialog: PropTypes.func.isRequired,
   openTeamDialog: PropTypes.func.isRequired,
+  openEmployeeDialog: PropTypes.func.isRequired,
 };
 
 export default DrawerActions;
