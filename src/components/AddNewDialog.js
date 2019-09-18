@@ -64,7 +64,7 @@ const AddNewDialog = memo(({ isOpen, title, closeDialog, request }) => {
           onClick={async () => {
             if (name) {
               // Make Request
-              await request(name);
+              request(name);
 
               // Clear the input
               setName('');

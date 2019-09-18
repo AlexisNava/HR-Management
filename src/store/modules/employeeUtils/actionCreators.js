@@ -9,6 +9,7 @@ import {
   REQUEST_TEAMS_EMPLOYEES,
   REQUEST_TEAMS_EMPLOYEES_SUCCESS,
   REQUEST_ADD_POSITION,
+  REQUEST_ADD_TEAM,
 } from './actions';
 
 export const requestPositions = () => ({ type: REQUEST_POSITIONS });
@@ -40,4 +41,9 @@ export const requestTeamsEmployeesSuccess = payload => ({
 export const requestAddPosition = positionName => ({
   type: REQUEST_ADD_POSITION,
   positionName,
+});
+
+export const requestAddTeam = teamName => ({
+  type: REQUEST_ADD_TEAM,
+  teamName,
 });

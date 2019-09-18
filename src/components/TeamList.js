@@ -81,7 +81,7 @@ const TeamList = memo(() => {
                         primary={`${employee.name} ${
                           employee.lastName
                         } ${employee.mothersName || ''}`}
-                        secondary="Back End Developer"
+                        secondary={employee.position}
                       />
 
                       <ListItemSecondaryAction>

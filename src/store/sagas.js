@@ -5,6 +5,7 @@ import { watcherLogInRequest } from './modules/user/sagas';
 import {
   watcherTeamsEmployees,
   watcherAddPosition,
+  watcherAddTeam,
 } from './modules/employeeUtils/sagas';
 
 function* rootSaga() {
@@ -12,6 +13,7 @@ function* rootSaga() {
     watcherLogInRequest(),
     watcherTeamsEmployees(),
     watcherAddPosition(),
+    watcherAddTeam(),
   ]);
 }
 
