@@ -12,3 +12,17 @@ export const logIn = async (email, password) => {
 
   return response;
 };
+
+export const getTeams = async token => {
+  const response = await axios.get('http://0.0.0.0:4000/api/team', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (response && response.data && response.data.data) {
+    return response.data.data;
+  }
+
+  return response;
+};
