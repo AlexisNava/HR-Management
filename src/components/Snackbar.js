@@ -17,7 +17,10 @@ const snackbar = memo(({ isOpen, message }) => {
       autoHideDuration={6000}
       message={<span>{message}</span>}
       open={isOpen}
-      onClose={() => dispatch(hideNotification())}
+      onClose={() => {
+        dispatch(hideNotification());
+        window.location.reload(false);
+      }}
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'left',
@@ -26,7 +29,10 @@ const snackbar = memo(({ isOpen, message }) => {
         <Button
           color="secondary"
           size="small"
-          onClick={() => dispatch(hideNotification())}
+          onClick={() => {
+            dispatch(hideNotification());
+            window.location.reload(false);
+          }}
         >
           OK
         </Button>,

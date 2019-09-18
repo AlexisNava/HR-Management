@@ -55,7 +55,7 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
   useEffect(() => {
     dispatch(requestPositions());
     dispatch(requestTeams());
-  }, [dispatch]);
+  }, []);
 
   function validateFields() {
     if (!team) {
