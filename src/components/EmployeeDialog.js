@@ -233,10 +233,10 @@ const EmployeeDialog = memo(({ isOpen, closeDialog }) => {
                   mothersName,
                 ),
               );
-            }
 
-            clearStates();
-            closeDialog();
+              clearStates();
+              closeDialog();
+            }
           }}
         >
           Add
