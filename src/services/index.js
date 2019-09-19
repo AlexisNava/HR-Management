@@ -182,3 +182,25 @@ export const addEmployee = async (
     throw error;
   }
 };
+
+export const getAllReports = async token => {
+  try {
+    const response = await axios.get('http://0.0.0.0:4000/api/report', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response && response.data && response.data.data) {
+      return response.data.data;
+    }
+
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data);
+    }
+
+    throw error;
+  }
+};

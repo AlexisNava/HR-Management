@@ -8,6 +8,7 @@ import {
   REQUEST_POSITIONS,
   REQUEST_TEAMS,
   REQUEST_ADD_EMPLOYEE,
+  REQUEST_REPORTS,
 } from './actions';
 
 // Services
@@ -18,6 +19,7 @@ import {
   getAllPositions,
   getAllTeams,
   addEmployee,
+  getAllReports,
 } from '../../../services';
 
 // Action Creators
@@ -25,6 +27,7 @@ import {
   requestTeamsEmployeesSuccess,
   requestPositionsSuccess,
   requestTeamsSuccess,
+  requestReportsSuccess,
 } from './actionCreators';
 import { showNotification } from '../notification/actionCreators';
 import { logOut } from '../user/actionCreators';
@@ -192,7 +195,7 @@ function* callAddEmployee({
   const token = yield select(state => state.user.get('token'));
 
   try {
-    const response = yield call(
+    yield call(
       addEmployee,
       token,
       team,
@@ -203,16 +206,6 @@ function* callAddEmployee({
       lastName,
       mothersName,
     );
-
-    console.log('team', team);
-    console.log('position', position);
-    console.log('email', email);
-    console.log('password', password);
-    console.log('name', name);
-    console.log('lastName', lastName);
-    console.log('mothersName', mothersName);
-
-    console.log('response', response);
 
     yield put(
       showNotification({ message: 'Added new Employee successfully.' }),
@@ -238,4 +231,34 @@ function* callAddEmployee({
 
 export function* watcherAddEmployee() {
   yield takeLatest(REQUEST_ADD_EMPLOYEE, callAddEmployee);
+}
+
+function* callGetAllReports() {
+  const token = yield select(state => state.user.get('token'));
+
+  try {
+    const response = yield call(getAllReports, token);
+
+    yield put(requestReportsSuccess({ reports: response }));
+  } catch (error) {
+    if (
+      error &&
+      error.data &&
+      error.data.errorMessage &&
+      error.data.errorMessage === 'jwt expired'
+    ) {
+      yield put(showNotification({ message: 'Session Expired' }));
+      yield put(logOut());
+    }
+
+    yield put(
+      showNotification({
+        message: 'Failure trying to get all the reports.',
+      }),
+    );
+  }
+}
+
+export function* watcherGetAllReports() {
+  yield takeLatest(REQUEST_REPORTS, callGetAllReports);
 }

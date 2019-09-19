@@ -9,6 +9,8 @@ import {
   REQUEST_TEAMS_EMPLOYEES_SUCCESS,
   REQUEST_ADD_POSITION,
   REQUEST_ADD_TEAM,
+  REQUEST_REPORTS,
+  REQUEST_REPORTS_SUCCESS,
 } from './actions';
 
 export const requestPositions = () => ({ type: REQUEST_POSITIONS });
@@ -45,6 +47,12 @@ export const requestAddEmployee = (
 export const requestTeamsEmployees = () => ({ type: REQUEST_TEAMS_EMPLOYEES });
 export const requestTeamsEmployeesSuccess = payload => ({
   type: REQUEST_TEAMS_EMPLOYEES_SUCCESS,
+  payload,
+});
+
+export const requestReports = () => ({ type: REQUEST_REPORTS });
+export const requestReportsSuccess = payload => ({
+  type: REQUEST_REPORTS_SUCCESS,
   payload,
 });
 
