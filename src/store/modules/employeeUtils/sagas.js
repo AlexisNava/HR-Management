@@ -9,6 +9,7 @@ import {
   REQUEST_TEAMS,
   REQUEST_ADD_EMPLOYEE,
   REQUEST_REPORTS,
+  REQUEST_ADD_REPORT,
 } from './actions';
 
 // Services
@@ -20,6 +21,7 @@ import {
   getAllTeams,
   addEmployee,
   getAllReports,
+  addReport,
 } from '../../../services';
 
 // Action Creators
@@ -261,4 +263,49 @@ function* callGetAllReports() {
 
 export function* watcherGetAllReports() {
   yield takeLatest(REQUEST_REPORTS, callGetAllReports);
+}
+
+function* callAddReport({ assignedTo, arrivalTime, departureTime }) {
+  const token = yield select(state => state.user.get('token'));
+  const assignedBy = yield select(state => state.user.get('id'));
+  const workingDay = departureTime - arrivalTime;
+
+  console.log('assignedTo', assignedTo);
+  console.log('assignedBy', assignedBy);
+
+  try {
+    const response = yield call(
+      addReport,
+      token,
+      assignedBy,
+      assignedTo,
+      arrivalTime,
+      departureTime,
+      workingDay,
+    );
+
+    console.log('response', response);
+
+    yield put(showNotification({ message: 'Added new report successfully.' }));
+  } catch (error) {
+    if (
+      error &&
+      error.data &&
+      error.data.errorMessage &&
+      error.data.errorMessage === 'jwt expired'
+    ) {
+      yield put(showNotification({ message: 'Session Expired' }));
+      yield put(logOut());
+    }
+
+    yield put(
+      showNotification({
+        message: 'Failure trying to add a new report. Verify your information.',
+      }),
+    );
+  }
+}
+
+export function* watcherAddReport() {
+  yield takeLatest(REQUEST_ADD_REPORT, callAddReport);
 }

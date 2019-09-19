@@ -1,5 +1,6 @@
 import React, { memo, useState, Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 // MUI Components
 import Paper from '@material-ui/core/Paper';
@@ -24,7 +25,7 @@ import PostAddIcon from '@material-ui/icons/PostAdd';
 // Action Creator
 import { requestTeamsEmployees } from '../store/modules/employeeUtils/actionCreators';
 
-const TeamList = memo(() => {
+const TeamList = memo(({ openReportDialog }) => {
   const dispatch = useDispatch();
 
   const teamsEmployees = useSelector(state =>
@@ -85,7 +86,9 @@ const TeamList = memo(() => {
                       />
 
                       <ListItemSecondaryAction>
-                        <IconButton>
+                        <IconButton
+                          onClick={() => openReportDialog(employee.id)}
+                        >
                           <PostAddIcon />
                         </IconButton>
                       </ListItemSecondaryAction>
@@ -102,5 +105,9 @@ const TeamList = memo(() => {
 
   return <Typography variant="h6">You don't have teams yet!</Typography>;
 });
+
+TeamList.propTypes = {
+  openReportDialog: PropTypes.func.isRequired,
+};
 
 export default TeamList;

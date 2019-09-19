@@ -56,7 +56,7 @@ const ReportsTable = memo(() => {
     );
   }
 
-  return <Typography variant="h6">You don't have teams yet!</Typography>;
+  return <Typography variant="h6">You don't have reports yet!</Typography>;
 });
 
 export default ReportsTable;

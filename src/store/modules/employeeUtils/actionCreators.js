@@ -11,6 +11,7 @@ import {
   REQUEST_ADD_TEAM,
   REQUEST_REPORTS,
   REQUEST_REPORTS_SUCCESS,
+  REQUEST_ADD_REPORT,
 } from './actions';
 
 export const requestPositions = () => ({ type: REQUEST_POSITIONS });
@@ -64,4 +65,11 @@ export const requestAddPosition = positionName => ({
 export const requestAddTeam = teamName => ({
   type: REQUEST_ADD_TEAM,
   teamName,
+});
+
+export const requestAddReport = (arrivalTime, departureTime, assignedTo) => ({
+  type: REQUEST_ADD_REPORT,
+  arrivalTime,
+  departureTime,
+  assignedTo,
 });

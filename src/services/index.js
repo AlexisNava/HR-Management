@@ -204,3 +204,42 @@ export const getAllReports = async token => {
     throw error;
   }
 };
+
+export const addReport = async (
+  token,
+  assignedBy,
+  assignedTo,
+  arrivalTime,
+  departureTime,
+  workingDay,
+) => {
+  try {
+    const response = await axios.post(
+      'http://0.0.0.0:4000/api/report',
+      {
+        assignedBy,
+        assignedTo,
+        arrivalTime,
+        departureTime,
+        workingDay,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+
+    if (response && response.data && response.data.data) {
+      return response.data.data;
+    }
+
+    return response;
+  } catch (error) {
+    if (error.response) {
+      console.log(error.response.data);
+    }
+
+    throw error;
+  }
+};

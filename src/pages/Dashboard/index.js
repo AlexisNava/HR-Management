@@ -8,6 +8,7 @@ import TeamList from '../../components/TeamList';
 import AddNewDialog from '../../components/AddNewDialog';
 import EmployeeDialog from '../../components/EmployeeDialog';
 import ReportsTable from '../../components/ReportsTable';
+import ReportDialog from '../../components/ReportDialog';
 
 // Action Crators
 import {
@@ -28,6 +29,8 @@ const Dashboard = memo(() => {
   const [positionDialogIsOpen, setPositionDialogIsOpen] = useState(false);
   const [teamDialogIsOpen, setTeamDialogIsOpen] = useState(false);
   const [employeeDialogIsOpen, setEmployeeDialogIsOpen] = useState(false);
+  const [reportDialogIsOpen, setReportDialogIsOpen] = useState(false);
+  const [currentEmployeeID, setCurrentEmployeeID] = useState(null);
 
   // Callbacks
   const changeDrawerIsOpen = useCallback(() => {
@@ -45,6 +48,14 @@ const Dashboard = memo(() => {
   const changeEmmployeeDialogIsOpen = useCallback(() => {
     setEmployeeDialogIsOpen(currentState => !currentState);
   }, [setEmployeeDialogIsOpen]);
+
+  const changeReportDialogIsOpen = useCallback(
+    employeeId => {
+      setReportDialogIsOpen(currentState => !currentState);
+      setCurrentEmployeeID(employeeId);
+    },
+    [setReportDialogIsOpen],
+  );
 
   const dispatchAddPosition = useCallback(
     positionName => {
@@ -90,6 +101,12 @@ const Dashboard = memo(() => {
             isOpen={employeeDialogIsOpen}
             closeDialog={changeEmmployeeDialogIsOpen}
           />
+
+          <ReportDialog
+            isOpen={reportDialogIsOpen}
+            closeDialog={changeReportDialogIsOpen}
+            employeeID={currentEmployeeID}
+          />
         </Fragment>
       )}
 
@@ -102,7 +119,9 @@ const Dashboard = memo(() => {
 
       {isAdmin === false && <ReportsTable />}
 
-      {isAdmin === true && <TeamList />}
+      {isAdmin === true && (
+        <TeamList openReportDialog={changeReportDialogIsOpen} />
+      )}
     </Fragment>
   );
 });
