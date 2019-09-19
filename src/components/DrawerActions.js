@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // MUI Components
 import Drawer from '@material-ui/core/Drawer';
@@ -26,6 +26,8 @@ const DrawerActions = memo(
   }) => {
     const dispatch = useDispatch();
 
+    const isAdmin = useSelector(state => state.user.get('isAdmin'));
+
     return (
       <Drawer open={isOpen}>
         <List>
@@ -37,17 +39,21 @@ const DrawerActions = memo(
 
           <Divider />
 
-          <ListItem button onClick={() => openPositionDialog()}>
-            <ListItemText primary="Position" />
-          </ListItem>
+          {isAdmin && (
+            <Fragment>
+              <ListItem button onClick={() => openPositionDialog()}>
+                <ListItemText primary="Position" />
+              </ListItem>
 
-          <ListItem button onClick={() => openTeamDialog()}>
-            <ListItemText primary="Team" />
-          </ListItem>
+              <ListItem button onClick={() => openTeamDialog()}>
+                <ListItemText primary="Team" />
+              </ListItem>
 
-          <ListItem button onClick={() => openEmployeeDialog()}>
-            <ListItemText primary="Employee" />
-          </ListItem>
+              <ListItem button onClick={() => openEmployeeDialog()}>
+                <ListItemText primary="Employee" />
+              </ListItem>
+            </Fragment>
+          )}
 
           <ListItem button onClick={() => dispatch(logOut())}>
             <ListItemText primary="Log Out" />

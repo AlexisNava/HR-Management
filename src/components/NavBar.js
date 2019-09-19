@@ -1,6 +1,6 @@
-import React, { memo } from 'react';
+import React, { memo, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // MUI Components
 import AppBar from '@material-ui/core/AppBar';
@@ -23,6 +23,8 @@ const NavBar = memo(
     openEmployeeDialog,
   }) => {
     const dispatch = useDispatch();
+
+    const isAdmin = useSelector(state => state.user.get('isAdmin'));
 
     return (
       <AppBar position="static" className="navbar">
@@ -50,23 +52,27 @@ const NavBar = memo(
               </Button>
             </div>
 
-            <div className="navbar__item">
-              <Button color="inherit" onClick={() => openEmployeeDialog()}>
-                Employee
-              </Button>
-            </div>
+            {isAdmin === true && (
+              <Fragment>
+                <div className="navbar__item">
+                  <Button color="inherit" onClick={() => openEmployeeDialog()}>
+                    Employee
+                  </Button>
+                </div>
 
-            <div className="navbar__item">
-              <Button color="inherit" onClick={() => openTeamDialog()}>
-                Team
-              </Button>
-            </div>
+                <div className="navbar__item">
+                  <Button color="inherit" onClick={() => openTeamDialog()}>
+                    Team
+                  </Button>
+                </div>
 
-            <div className="navbar__item">
-              <Button color="inherit" onClick={() => openPositionDialog()}>
-                Position
-              </Button>
-            </div>
+                <div className="navbar__item">
+                  <Button color="inherit" onClick={() => openPositionDialog()}>
+                    Position
+                  </Button>
+                </div>
+              </Fragment>
+            )}
           </div>
         </div>
       </AppBar>

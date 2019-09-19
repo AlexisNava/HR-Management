@@ -1,5 +1,5 @@
 import React, { memo, Fragment, useState, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // Components
 import NavBar from '../../components/NavBar';
@@ -19,6 +19,8 @@ import './Dashboard.css';
 
 const Dashboard = memo(() => {
   const dispatch = useDispatch();
+
+  const isAdmin = useSelector(state => state.user.get('isAdmin'));
 
   // States
   const [drawerActionsIsOpen, setDrawerActionsIsOpen] = useState(false);
@@ -67,24 +69,28 @@ const Dashboard = memo(() => {
         openEmployeeDialog={changeEmmployeeDialogIsOpen}
       />
 
-      <AddNewDialog
-        isOpen={positionDialogIsOpen}
-        title="Position"
-        closeDialog={changePositionDialogIsOpen}
-        request={dispatchAddPosition}
-      />
+      {isAdmin === true && (
+        <Fragment>
+          <AddNewDialog
+            isOpen={positionDialogIsOpen}
+            title="Position"
+            closeDialog={changePositionDialogIsOpen}
+            request={dispatchAddPosition}
+          />
 
-      <AddNewDialog
-        isOpen={teamDialogIsOpen}
-        title="Team"
-        closeDialog={changeTeamDialogIsOpen}
-        request={dispatchAddTeam}
-      />
+          <AddNewDialog
+            isOpen={teamDialogIsOpen}
+            title="Team"
+            closeDialog={changeTeamDialogIsOpen}
+            request={dispatchAddTeam}
+          />
 
-      <EmployeeDialog
-        isOpen={employeeDialogIsOpen}
-        closeDialog={changeEmmployeeDialogIsOpen}
-      />
+          <EmployeeDialog
+            isOpen={employeeDialogIsOpen}
+            closeDialog={changeEmmployeeDialogIsOpen}
+          />
+        </Fragment>
+      )}
 
       <NavBar
         openDrawerActions={changeDrawerIsOpen}
@@ -93,7 +99,7 @@ const Dashboard = memo(() => {
         openEmployeeDialog={changeEmmployeeDialogIsOpen}
       />
 
-      <TeamList />
+      {isAdmin === true && <TeamList />}
     </Fragment>
   );
 });
