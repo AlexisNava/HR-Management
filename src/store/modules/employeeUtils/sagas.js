@@ -270,11 +270,8 @@ function* callAddReport({ assignedTo, arrivalTime, departureTime }) {
   const assignedBy = yield select(state => state.user.get('id'));
   const workingDay = departureTime - arrivalTime;
 
-  console.log('assignedTo', assignedTo);
-  console.log('assignedBy', assignedBy);
-
   try {
-    const response = yield call(
+    yield call(
       addReport,
       token,
       assignedBy,
@@ -283,8 +280,6 @@ function* callAddReport({ assignedTo, arrivalTime, departureTime }) {
       departureTime,
       workingDay,
     );
-
-    console.log('response', response);
 
     yield put(showNotification({ message: 'Added new report successfully.' }));
   } catch (error) {
