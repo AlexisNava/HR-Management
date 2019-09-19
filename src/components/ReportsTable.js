@@ -18,8 +18,6 @@ const ReportsTable = memo(() => {
 
   const reports = useSelector(state => state.employeeUtils.get('reports'));
 
-  console.log('reports', reports);
-
   useEffect(() => {
     dispatch(requestReports());
   }, [dispatch]);
