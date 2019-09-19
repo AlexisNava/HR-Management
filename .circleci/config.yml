@@ -10,7 +10,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: "Install Dependencies"
-          command: yarn install
+          command: npm i
       - save_cache:
           paths:
             - node_modules
@@ -26,7 +26,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: "Run tests"
-          command: yarn test
+          command: npm test
 
   run_linter:
     docker:
@@ -38,7 +38,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
       - run:
           name: "Run ESLint"
-          command: yarn lint
+          command: npm run lint
 
   publish_docker_image:
     docker:

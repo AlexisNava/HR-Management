@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  hr-management-services:
+    image: balexisnava/hr-management-services
+    ports:
+      - 4000:300
+    depends_on:
+      - prisma
+      - postgres
+  prisma:
+    image: prismagraphql/prisma:1.34
+    restart: always
+    ports:
+      - 4466:4466
+    environment:
+      PRISMA_CONFIG: |
+        port: 4466
+        databases:
+          default:
+            connector: postgres
+            host: postgres
+            port: 5432
+            user: hr-services
+            password: development_hr_services_2019
+  postgres:
+    image: postgres:10.3
+    restart: always
+    environment:
+      POSTGRES_USER: hr-services
+      POSTGRES_PASSWORD: development_hr_services_2019
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+volumes:
+  postgres: ~

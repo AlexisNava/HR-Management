@@ -7,7 +7,7 @@ HR-Management-App is a SPA for the HR Management Project.
 ## Requirements
 
 - [Node LTS](https://nodejs.org/en/download/) >= *v*10.16.3
-- [yarn](https://yarnpkg.com/lang/en/) >= *v*1.17.3
+- [npm](https://docs.npmjs.com/cli/install) >= *v*6.9.0
 - [nvm](https://github.com/nvm-sh/nvm) >= *v*0.34.0
 
 ## Installation
@@ -29,7 +29,7 @@ nvm use
 
 ```sh
 
-yarn install
+npm install
 
 ```
 
@@ -39,7 +39,7 @@ yarn install
 
 ```sh
 
-yarn start
+npm start
 
 ```
 
@@ -47,7 +47,7 @@ yarn start
 
 ```sh
 
-yarn run start:production
+npm run start:production
 
 ```
 
@@ -55,7 +55,7 @@ yarn run start:production
 
 ```sh
 
-yarn run build
+npm run build
 
 ```
 
@@ -63,7 +63,7 @@ yarn run build
 
 ```sh
 
-yarn test
+npm test
 
 ```
 

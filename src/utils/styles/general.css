@@ -1,0 +1,25 @@
+.flex-container {
+  display: flex;
+}
+
+.flex-container--center-content {
+  justify-content: center;
+}
+
+.flex-container--vertical-alignment {
+  flex-flow: column;
+}
+
+.flex-container--row-reverse {
+  flex-direction: row-reverse;
+}
+
+.avatar {
+  margin: 2% !important;
+  color: #fff !important;
+  background: #f5a623 !important;
+}
+
+.input--full-width {
+  width: 100%;
+}

@@ -1,0 +1,26 @@
+.form {
+  margin: 3% 30%;
+  padding: 2%;
+}
+
+.form__element {
+  width: 100%;
+  margin-bottom: 2.5%;
+}
+
+.form__element--text {
+  text-align: center;
+}
+
+@media only screen and (max-width: 425px) {
+  .form {
+    margin: 3% 5%;
+    padding: 2%;
+  }
+}
+
+@media only screen and (max-width: 375px) {
+}
+
+@media only screen and (max-width: 320px) {
+}
