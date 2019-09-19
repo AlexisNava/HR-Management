@@ -30,16 +30,16 @@
   display: none;
 }
 
-.team-list {
+.paper-dashboard {
   margin: 2.5% 20%;
 }
 
-.team-list__item-icon {
+.paper-dashboard__item-icon {
   font-size: 2.4em !important;
 }
 
 @media only screen and (max-width: 768px) {
-  .team-list {
+  .paper-dashboard {
     margin: 2.5% 10%;
   }
 }
@@ -61,7 +61,7 @@
     display: flex;
   }
 
-  .team-list {
+  .paper-dashboard {
     margin: 5% 2.5%;
   }
 }

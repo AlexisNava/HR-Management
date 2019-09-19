@@ -7,6 +7,7 @@ import DrawerActions from '../../components/DrawerActions';
 import TeamList from '../../components/TeamList';
 import AddNewDialog from '../../components/AddNewDialog';
 import EmployeeDialog from '../../components/EmployeeDialog';
+import ReportsTable from '../../components/ReportsTable';
 
 // Action Crators
 import {
@@ -98,6 +99,8 @@ const Dashboard = memo(() => {
         openTeamDialog={changeTeamDialogIsOpen}
         openEmployeeDialog={changeEmmployeeDialogIsOpen}
       />
+
+      {isAdmin === false && <ReportsTable />}
 
       {isAdmin === true && <TeamList />}
     </Fragment>

@@ -39,7 +39,7 @@ const TeamList = memo(() => {
 
   if (teamsEmployees && teamsEmployees.length > 0) {
     return (
-      <Paper className="team-list">
+      <Paper className="paper-dashboard">
         <List>
           {teamsEmployees.map(team => (
             <Fragment key={team.id}>
@@ -53,7 +53,7 @@ const TeamList = memo(() => {
                 }}
               >
                 <ListItemIcon>
-                  <RecentActorsIcon className="team-list__item-icon" />
+                  <RecentActorsIcon className="paper-dashboard__item-icon" />
                 </ListItemIcon>
 
                 <ListItemText
